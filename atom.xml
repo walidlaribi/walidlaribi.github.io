@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+ 
+ <title>The blog of Walid</title>
+ <link href="http://walidlaribi.github.io/atom.xml" rel="self"/>
+ <link href="http://walidlaribi.github.io"/>
+ <updated>2014-03-29T18:45:48+01:00</updated>
+ <id>http://walidlaribi.github.io</id>
+ <author>
+   <name>Walid</name>
+   <email>laribiwalid@gmail.com</email>
+ </author>
+
+ 
+ <entry>
+   <title>An introduction to Google App Engine</title>
+   <link href="http://walidlaribi.github.io/blog/appengine/2014/03/29/intro-to-gae.html"/>
+   <updated>2014-03-29T00:00:00+01:00</updated>
+   <id>http://walidlaribi.github.io/blog/appengine/2014/03/29/intro-to-gae</id>
+   <content type="html">&lt;p&gt;Nowadays, everyone is going &lt;a href=&quot;http://en.wikipedia.org/wiki/Cloud_computing&quot;&gt;cloud&lt;/a&gt;, writing applications has never been easier when you just focus on them, no need to think about the infrastructure, the operating system, platforms’ versions, etc. One of the most powerful cloud platforms is &lt;a href=&quot;https://cloud.google.com/‎&quot;&gt;GCP&lt;/a&gt; : Google Cloud Platform.&lt;/p&gt;
+
+&lt;p&gt;Today we’re going to talk about &lt;a href=&quot;https://appengine.google.com/&quot;&gt;Google App Engine&lt;/a&gt;, which is part of GCP and allows you to write scalable applications and deploy them to Google servers in minutes. You can read more about Google App Engine &lt;a href=&quot;https://developers.google.com/appengine/&quot;&gt;here&lt;/a&gt;, and follow a very nice tuorial &lt;a href=&quot;https://developers.google.com/appengine/docs/python/gettingstartedpython27/&quot;&gt;here&lt;/a&gt;. Basically, apps that run on App Engine are written in Python, Java, Go and PHP. In this tutorial we’re going to talk only about Python.&lt;/p&gt;
+
+&lt;p&gt;When you write a GAE application with &lt;a href=&quot;https://www.python.org/&quot;&gt;python&lt;/a&gt;, you have your &lt;code&gt;.py&lt;/code&gt; files that are server side, and your &lt;code&gt;.html&lt;/code&gt;, &lt;code&gt;.js&lt;/code&gt; and &lt;code&gt;.css&lt;/code&gt; files that are client side. You also have your &lt;code&gt;app.yaml&lt;/code&gt; file which contains the global config of your application, it’s there where you put the name of your project, version, used libraries, etc.&lt;/p&gt;
+
+&lt;p&gt;In order for your app to show in web browsers, it should contain &lt;code&gt;RequestHandlers&lt;/code&gt; which are simply python classes that extend &lt;code&gt;webapp2.RequestHandler&lt;/code&gt; class. Typically, a RequesHandler class contains a &lt;code&gt;get()&lt;/code&gt; and a &lt;code&gt;post()&lt;/code&gt; method to respond to &lt;code&gt;HTTP GET&lt;/code&gt; and &lt;code&gt;HTTP POST&lt;/code&gt; calls.&lt;/p&gt;
+
+&lt;p&gt;Here is a simple example of a &lt;code&gt;RequestHandler&lt;/code&gt; that shows a text in the browser:&lt;/p&gt;
+&lt;div class=&#39;highlight&#39;&gt;&lt;pre&gt;&lt;code class=&#39;python&#39;&gt;&lt;span class=&#39;kn&#39;&gt;import&lt;/span&gt; &lt;span class=&#39;nn&#39;&gt;webapp2&lt;/span&gt;
+
+&lt;span class=&#39;k&#39;&gt;class&lt;/span&gt; &lt;span class=&#39;nc&#39;&gt;MainHandler&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;(&lt;/span&gt;&lt;span class=&#39;n&#39;&gt;webapp2&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;.&lt;/span&gt;&lt;span class=&#39;n&#39;&gt;RequestHandler&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;):&lt;/span&gt;
+	&lt;span class=&#39;k&#39;&gt;def&lt;/span&gt; &lt;span class=&#39;nf&#39;&gt;get&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;(&lt;/span&gt;&lt;span class=&#39;bp&#39;&gt;self&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;):&lt;/span&gt;
+		&lt;span class=&#39;bp&#39;&gt;self&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;.&lt;/span&gt;&lt;span class=&#39;n&#39;&gt;response&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;.&lt;/span&gt;&lt;span class=&#39;n&#39;&gt;write&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;(&lt;/span&gt;&lt;span class=&#39;s&#39;&gt;&amp;#39;You have just wrote your first GAE application!&amp;#39;&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;As simple as that, if we run this application, we’ll get the following message on the browser: &lt;img src=&quot;http://walidlaribi.github.io/assets/gae-first-example.png&quot; alt=&quot;My helpful screenshot&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Now, let’s suppose that you need to show more beautiful pages to your users, with your own custom style and images and everything that people want to see, in this case, you need to use separate html files and then render them with values that you want to display to your users. We do this with &lt;code&gt;jinja2&lt;/code&gt; and here is a very simple demo:&lt;/p&gt;
+&lt;div class=&#39;highlight&#39;&gt;&lt;pre&gt;&lt;code class=&#39;python&#39;&gt;&lt;span class=&#39;kn&#39;&gt;import&lt;/span&gt; &lt;span class=&#39;nn&#39;&gt;webapp2&lt;/span&gt;
+&lt;span class=&#39;kn&#39;&gt;import&lt;/span&gt; &lt;span class=&#39;nn&#39;&gt;jinja2&lt;/span&gt;
+&lt;span class=&#39;kn&#39;&gt;import&lt;/span&gt; &lt;span class=&#39;nn&#39;&gt;os&lt;/span&gt;
+
+&lt;span class=&#39;n&#39;&gt;JINJA_ENVIRONMENT&lt;/span&gt; &lt;span class=&#39;o&#39;&gt;=&lt;/span&gt; &lt;span class=&#39;n&#39;&gt;jinja2&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;.&lt;/span&gt;&lt;span class=&#39;n&#39;&gt;Environment&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;(&lt;/span&gt;
+  &lt;span class=&#39;n&#39;&gt;loader&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;=&lt;/span&gt;&lt;span class=&#39;n&#39;&gt;jinja2&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;.&lt;/span&gt;&lt;span class=&#39;n&#39;&gt;FileSystemLoader&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;(&lt;/span&gt;&lt;span class=&#39;n&#39;&gt;os&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;.&lt;/span&gt;&lt;span class=&#39;n&#39;&gt;path&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;.&lt;/span&gt;&lt;span class=&#39;n&#39;&gt;dirname&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;(&lt;/span&gt;&lt;span class=&#39;n&#39;&gt;__file__&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;)),&lt;/span&gt;
+  &lt;span class=&#39;n&#39;&gt;extensions&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;=&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;[&lt;/span&gt;&lt;span class=&#39;s&#39;&gt;&amp;#39;jinja2.ext.autoescape&amp;#39;&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;])&lt;/span&gt;
+
+&lt;span class=&#39;n&#39;&gt;our_beautiful_page&lt;/span&gt; &lt;span class=&#39;o&#39;&gt;=&lt;/span&gt; &lt;span class=&#39;n&#39;&gt;JINJA_ENVIRONMENT&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;.&lt;/span&gt;&lt;span class=&#39;n&#39;&gt;get_template&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;(&lt;/span&gt;&lt;span class=&#39;s&#39;&gt;&amp;#39;home.html&amp;#39;&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;)&lt;/span&gt;
+
+&lt;span class=&#39;k&#39;&gt;class&lt;/span&gt; &lt;span class=&#39;nc&#39;&gt;MainHandler&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;(&lt;/span&gt;&lt;span class=&#39;n&#39;&gt;webapp2&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;.&lt;/span&gt;&lt;span class=&#39;n&#39;&gt;RequestHandler&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;):&lt;/span&gt;
+	&lt;span class=&#39;k&#39;&gt;def&lt;/span&gt; &lt;span class=&#39;nf&#39;&gt;get&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;(&lt;/span&gt;&lt;span class=&#39;bp&#39;&gt;self&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;):&lt;/span&gt;
+		&lt;span class=&#39;bp&#39;&gt;self&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;.&lt;/span&gt;&lt;span class=&#39;n&#39;&gt;response&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;.&lt;/span&gt;&lt;span class=&#39;n&#39;&gt;write&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;(&lt;/span&gt;&lt;span class=&#39;n&#39;&gt;our_beautiful_page&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;.&lt;/span&gt;&lt;span class=&#39;n&#39;&gt;render&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;())&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;This will display &lt;code&gt;home.html&lt;/code&gt; on the browser.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://walidlaribi.github.io/assets/gae-second-example.png&quot; alt=&quot;My helpful screenshot&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;If you want to send values from your class to your customized HTML page, you can do it like this:&lt;/p&gt;
+
+&lt;p&gt;1- &lt;code&gt;our_beautiful_page.html&lt;/code&gt;:&lt;/p&gt;
+&lt;div class=&#39;highlight&#39;&gt;&lt;pre&gt;&lt;code class=&#39;html&#39;&gt;&lt;span class=&#39;nt&#39;&gt;&amp;lt;h1&lt;/span&gt; &lt;span class=&#39;na&#39;&gt;style=&lt;/span&gt;&lt;span class=&#39;s&#39;&gt;&amp;quot;color: red;&amp;quot;&lt;/span&gt;&lt;span class=&#39;nt&#39;&gt;&amp;gt;&lt;/span&gt; Welcome mister: {{name}}&lt;span class=&#39;nt&#39;&gt;&amp;lt;/h1&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;2- &lt;code&gt;main.py&lt;/code&gt;:&lt;/p&gt;
+&lt;div class=&#39;highlight&#39;&gt;&lt;pre&gt;&lt;code class=&#39;python&#39;&gt;&lt;span class=&#39;bp&#39;&gt;self&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;.&lt;/span&gt;&lt;span class=&#39;n&#39;&gt;response&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;.&lt;/span&gt;&lt;span class=&#39;n&#39;&gt;write&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;(&lt;/span&gt;&lt;span class=&#39;n&#39;&gt;our_beautiful_page&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;.&lt;/span&gt;&lt;span class=&#39;n&#39;&gt;render&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;(&lt;/span&gt;&lt;span class=&#39;n&#39;&gt;name&lt;/span&gt; &lt;span class=&#39;o&#39;&gt;=&lt;/span&gt; &lt;span class=&#39;s&#39;&gt;&amp;quot;John&amp;quot;&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;))&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;If you execute this code, you’ll get the following result on your browser:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://walidlaribi.github.io/assets/gae-third-example.png&quot; alt=&quot;My helpful screenshot&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;complete_working_code&quot;&gt;Complete working code:&lt;/h2&gt;
+
+&lt;p&gt;1- &lt;code&gt;app.yaml&lt;/code&gt; file:&lt;/p&gt;
+&lt;div class=&#39;highlight&#39;&gt;&lt;pre&gt;&lt;code class=&#39;python&#39;&gt;&lt;span class=&#39;n&#39;&gt;application&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;:&lt;/span&gt; &lt;span class=&#39;n&#39;&gt;my&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;-&lt;/span&gt;&lt;span class=&#39;n&#39;&gt;first&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;-&lt;/span&gt;&lt;span class=&#39;n&#39;&gt;gae&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;-&lt;/span&gt;&lt;span class=&#39;n&#39;&gt;app&lt;/span&gt;
+&lt;span class=&#39;n&#39;&gt;version&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;:&lt;/span&gt; &lt;span class=&#39;mi&#39;&gt;1&lt;/span&gt;
+&lt;span class=&#39;n&#39;&gt;runtime&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;:&lt;/span&gt; &lt;span class=&#39;n&#39;&gt;python27&lt;/span&gt;
+&lt;span class=&#39;n&#39;&gt;api_version&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;:&lt;/span&gt; &lt;span class=&#39;mi&#39;&gt;1&lt;/span&gt;
+&lt;span class=&#39;n&#39;&gt;threadsafe&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;:&lt;/span&gt; &lt;span class=&#39;n&#39;&gt;yes&lt;/span&gt;
+
+&lt;span class=&#39;n&#39;&gt;handlers&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;:&lt;/span&gt;
+&lt;span class=&#39;o&#39;&gt;-&lt;/span&gt; &lt;span class=&#39;n&#39;&gt;url&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;:&lt;/span&gt; &lt;span class=&#39;o&#39;&gt;/&lt;/span&gt;&lt;span class=&#39;n&#39;&gt;favicon&lt;/span&gt;\&lt;span class=&#39;o&#39;&gt;.&lt;/span&gt;&lt;span class=&#39;n&#39;&gt;ico&lt;/span&gt;
+  &lt;span class=&#39;n&#39;&gt;static_files&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;:&lt;/span&gt; &lt;span class=&#39;n&#39;&gt;favicon&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;.&lt;/span&gt;&lt;span class=&#39;n&#39;&gt;ico&lt;/span&gt;
+  &lt;span class=&#39;n&#39;&gt;upload&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;:&lt;/span&gt; &lt;span class=&#39;n&#39;&gt;favicon&lt;/span&gt;\&lt;span class=&#39;o&#39;&gt;.&lt;/span&gt;&lt;span class=&#39;n&#39;&gt;ico&lt;/span&gt;
+
+&lt;span class=&#39;o&#39;&gt;-&lt;/span&gt; &lt;span class=&#39;n&#39;&gt;url&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;:&lt;/span&gt; &lt;span class=&#39;o&#39;&gt;.*&lt;/span&gt;
+  &lt;span class=&#39;n&#39;&gt;script&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;:&lt;/span&gt; &lt;span class=&#39;n&#39;&gt;main&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;.&lt;/span&gt;&lt;span class=&#39;n&#39;&gt;app&lt;/span&gt;
+
+&lt;span class=&#39;n&#39;&gt;libraries&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;:&lt;/span&gt;
+&lt;span class=&#39;o&#39;&gt;-&lt;/span&gt; &lt;span class=&#39;n&#39;&gt;name&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;:&lt;/span&gt; &lt;span class=&#39;n&#39;&gt;webapp2&lt;/span&gt;
+  &lt;span class=&#39;n&#39;&gt;version&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;:&lt;/span&gt; &lt;span class=&#39;s&#39;&gt;&amp;quot;2.5.2&amp;quot;&lt;/span&gt;
+&lt;span class=&#39;o&#39;&gt;-&lt;/span&gt; &lt;span class=&#39;n&#39;&gt;name&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;:&lt;/span&gt; &lt;span class=&#39;n&#39;&gt;jinja2&lt;/span&gt;
+  &lt;span class=&#39;n&#39;&gt;version&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;:&lt;/span&gt; &lt;span class=&#39;n&#39;&gt;latest&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;2- &lt;code&gt;main.py&lt;/code&gt; file:&lt;/p&gt;
+&lt;div class=&#39;highlight&#39;&gt;&lt;pre&gt;&lt;code class=&#39;python&#39;&gt;&lt;span class=&#39;kn&#39;&gt;import&lt;/span&gt; &lt;span class=&#39;nn&#39;&gt;webapp2&lt;/span&gt;
+&lt;span class=&#39;kn&#39;&gt;import&lt;/span&gt; &lt;span class=&#39;nn&#39;&gt;jinja2&lt;/span&gt;
+&lt;span class=&#39;kn&#39;&gt;import&lt;/span&gt; &lt;span class=&#39;nn&#39;&gt;os&lt;/span&gt;
+
+&lt;span class=&#39;n&#39;&gt;JINJA_ENVIRONMENT&lt;/span&gt; &lt;span class=&#39;o&#39;&gt;=&lt;/span&gt; &lt;span class=&#39;n&#39;&gt;jinja2&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;.&lt;/span&gt;&lt;span class=&#39;n&#39;&gt;Environment&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;(&lt;/span&gt;
+  &lt;span class=&#39;n&#39;&gt;loader&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;=&lt;/span&gt;&lt;span class=&#39;n&#39;&gt;jinja2&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;.&lt;/span&gt;&lt;span class=&#39;n&#39;&gt;FileSystemLoader&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;(&lt;/span&gt;&lt;span class=&#39;n&#39;&gt;os&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;.&lt;/span&gt;&lt;span class=&#39;n&#39;&gt;path&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;.&lt;/span&gt;&lt;span class=&#39;n&#39;&gt;dirname&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;(&lt;/span&gt;&lt;span class=&#39;n&#39;&gt;__file__&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;)),&lt;/span&gt;
+  &lt;span class=&#39;n&#39;&gt;extensions&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;=&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;[&lt;/span&gt;&lt;span class=&#39;s&#39;&gt;&amp;#39;jinja2.ext.autoescape&amp;#39;&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;])&lt;/span&gt;
+
+&lt;span class=&#39;n&#39;&gt;our_beautiful_page&lt;/span&gt; &lt;span class=&#39;o&#39;&gt;=&lt;/span&gt; &lt;span class=&#39;n&#39;&gt;JINJA_ENVIRONMENT&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;.&lt;/span&gt;&lt;span class=&#39;n&#39;&gt;get_template&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;(&lt;/span&gt;&lt;span class=&#39;s&#39;&gt;&amp;#39;home.html&amp;#39;&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;)&lt;/span&gt;
+
+&lt;span class=&#39;k&#39;&gt;class&lt;/span&gt; &lt;span class=&#39;nc&#39;&gt;MainHandler&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;(&lt;/span&gt;&lt;span class=&#39;n&#39;&gt;webapp2&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;.&lt;/span&gt;&lt;span class=&#39;n&#39;&gt;RequestHandler&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;):&lt;/span&gt;
+	&lt;span class=&#39;k&#39;&gt;def&lt;/span&gt; &lt;span class=&#39;nf&#39;&gt;get&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;(&lt;/span&gt;&lt;span class=&#39;bp&#39;&gt;self&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;):&lt;/span&gt;
+		&lt;span class=&#39;bp&#39;&gt;self&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;.&lt;/span&gt;&lt;span class=&#39;n&#39;&gt;response&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;.&lt;/span&gt;&lt;span class=&#39;n&#39;&gt;write&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;(&lt;/span&gt;&lt;span class=&#39;n&#39;&gt;our_beautiful_page&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;.&lt;/span&gt;&lt;span class=&#39;n&#39;&gt;render&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;(&lt;/span&gt;&lt;span class=&#39;n&#39;&gt;name&lt;/span&gt; &lt;span class=&#39;o&#39;&gt;=&lt;/span&gt; &lt;span class=&#39;s&#39;&gt;&amp;quot;John&amp;quot;&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;))&lt;/span&gt;
+
+&lt;span class=&#39;n&#39;&gt;app&lt;/span&gt; &lt;span class=&#39;o&#39;&gt;=&lt;/span&gt; &lt;span class=&#39;n&#39;&gt;webapp2&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;.&lt;/span&gt;&lt;span class=&#39;n&#39;&gt;WSGIApplication&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;([&lt;/span&gt;
+    &lt;span class=&#39;p&#39;&gt;(&lt;/span&gt;&lt;span class=&#39;s&#39;&gt;&amp;#39;/&amp;#39;&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;,&lt;/span&gt; &lt;span class=&#39;n&#39;&gt;MainHandler&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;)&lt;/span&gt;
+&lt;span class=&#39;p&#39;&gt;],&lt;/span&gt; &lt;span class=&#39;n&#39;&gt;debug&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;=&lt;/span&gt;&lt;span class=&#39;bp&#39;&gt;True&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;3- &lt;code&gt;our_beautiful_page.html&lt;/code&gt; file:&lt;/p&gt;
+&lt;div class=&#39;highlight&#39;&gt;&lt;pre&gt;&lt;code class=&#39;html&#39;&gt;&lt;span class=&#39;nt&#39;&gt;&amp;lt;html&amp;gt;&lt;/span&gt;
+&lt;span class=&#39;nt&#39;&gt;&amp;lt;head&amp;gt;&lt;/span&gt;
+&lt;span class=&#39;nt&#39;&gt;&amp;lt;title&amp;gt;&lt;/span&gt;My first GAE application!&lt;span class=&#39;nt&#39;&gt;&amp;lt;/title&amp;gt;&lt;/span&gt;
+&lt;span class=&#39;nt&#39;&gt;&amp;lt;/head&amp;gt;&lt;/span&gt;
+&lt;span class=&#39;nt&#39;&gt;&amp;lt;body&amp;gt;&lt;/span&gt;
+
+&lt;span class=&#39;nt&#39;&gt;&amp;lt;h1&lt;/span&gt; &lt;span class=&#39;na&#39;&gt;style=&lt;/span&gt;&lt;span class=&#39;s&#39;&gt;&amp;quot;color: red;&amp;quot;&lt;/span&gt;&lt;span class=&#39;nt&#39;&gt;&amp;gt;&lt;/span&gt; Welcome mister: {{name}}&lt;span class=&#39;nt&#39;&gt;&amp;lt;/h1&amp;gt;&lt;/span&gt;
+
+&lt;span class=&#39;nt&#39;&gt;&amp;lt;/body&amp;gt;&lt;/span&gt;
+&lt;span class=&#39;nt&#39;&gt;&amp;lt;/html&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;That’s all for now, hope to see you in the next tutorial and learn more stuff together,&lt;/p&gt;</content>
+ </entry>
+ 
+ <entry>
+   <title>7 things I learnt from NYUAD Hackathon 2013 !</title>
+   <link href="http://walidlaribi.github.io/blog/stories/2013/03/04/nyuad-hackathon-2013.html"/>
+   <updated>2013-03-04T00:00:00+01:00</updated>
+   <id>http://walidlaribi.github.io/blog/stories/2013/03/04/nyuad-hackathon-2013</id>
+   <content type="html">&lt;p&gt;Last week, I have been honored by &lt;a href=&quot;http://nyuad.nyu.edu/&quot;&gt;New York University of Abu Dhabi&lt;/a&gt; to participate in an annual event which is the International &lt;a href=&quot;http://nyuad.nyu.edu/hackathon&quot;&gt;Hackathon&lt;/a&gt; in its 2nd edition. There were many &lt;a href=&quot;http://nyuad.nyu.edu/hackathon/people/students.html&quot;&gt;students&lt;/a&gt;, &lt;a href=&quot;http://nyuad.nyu.edu/hackathon/people/mentors.html&quot;&gt;mentors&lt;/a&gt; and &lt;a href=&quot;http://nyuad.nyu.edu/hackathon/people/judges.html&quot;&gt;judges&lt;/a&gt; from all over the world, I met people from the US, Canada, Mexico, Brazil, Denmark, Tunisia, Morocco, Egypt, Jordan, Lebanon, Saudi Arabia, Sri Lanka and India.&lt;/p&gt;
+
+&lt;p&gt;The aim of the hackathon is to gather all these skillful people in one place and build some cool products for social good in MENA region. All of us were brainstorming to select the best sixteen ideas and then everyone joined the team he wants to work with. This step is called &lt;a href=&quot;https://www.facebook.com/media/set/?set=a.422011441218472.97661.171400456279573&amp;type=3&quot;&gt;“Ready, Set, Pitch!”&lt;/a&gt; It’s really crazy when you find yourself working with people you just met and you believe that after only three days, you are going to show something publicly and that it should be working!!&lt;/p&gt;
+
+&lt;p&gt;I will try in this article to highlight the most important things I learnt from this amazing and unique experience. So let’s start.&lt;/p&gt;
+
+&lt;h2 id=&quot;1_be_tolerant&quot;&gt;1. Be tolerant:&lt;/h2&gt;
+
+&lt;p&gt;During the event, there have been students from different countries and continents this means different cultures and religions, it is really nice how they worked together in the same teams without any conflicts and complexes. So one thing to learn is that you can work with people that do not have certainly the same culture like you and do not share the same religious or political views. When you are working for the same goal you can reach it together, you just have to be tolerant and accept the other as it is, just focus on your subject.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://3.bp.blogspot.com/-vND4n0VmJBU/UTT-6Nrm9eI/AAAAAAAACVg/6vlbm88JT_Q/s400/522512_422033561216260_917841671_n.jpg&quot; alt=&quot;Be tolerant&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;2_believe_in_yourself&quot;&gt;2. Believe in yourself:&lt;/h2&gt;
+
+&lt;p&gt;In the beginning of the hackathon when we chose our projects and we started the work I told myself that it’s really hard for me to achieve the work in just three days and because I changed the team, It has been a little difficult for me to integrate this new team. But after that, I realized that when you define your tasks in a clear way, you can work on a small idea and move to the second one when you finish it. So you can think big while acting on small pieces and assemble them at the end. After three days only, I was surprised when I saw that we finished the main skeleton of the app, it was really awesome.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://4.bp.blogspot.com/-8Folm1BOCrA/UTUAHU3L9pI/AAAAAAAACVs/WDay_kcJsLY/s400/DSC06968.JPG&quot; alt=&quot;Believe&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;3_&quot;&gt;3. &lt;code&gt;#AgeIsJustANumber&lt;/code&gt;:&lt;/h2&gt;
+
+&lt;p&gt;At first when we met in the big room for discussing and brainstorming ideas, I saw a kid between us, instantly, I thought he was a son of someone or something like that.. Than I realized that he was a participant when he started talking about windows 8, windows phone 8 and stuff.. I was just surprised! He joined our table and I talked to him, he is a 14 years old programmer from India and his name is Gautam! We’ve been in the same team for the two next days. This guy taught me that age is really just a number, that everyone has the ability to start programming at an earlier stage, kids in my country are not used to.. They’re just afraid of.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://4.bp.blogspot.com/-02bA4o3vODc/UTT-U5DVpNI/AAAAAAAACVY/w3d_3N-pxU0/s400/DSC06973.JPG&quot; alt=&quot;Age&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;4_shut_up_and_go_build_something_useful&quot;&gt;4. Shut up and go build something useful:&lt;/h2&gt;
+
+&lt;p&gt;I have participated in many events in Algeria before, events like StartUp weekend, BootCamps and many training sessions. The difference with this one (NYUAD Hackathon) that it’s based on the results, I mean that your job is evaluated by your demo, there is not much talk and long speeches with theoretical aspects and business stuff and so on.. It’s all about code, teamwork and vision. You have to have a great idea first, than you start working on small parts of it to ensure that you’ll have something to demonstrate after three days. There is no need to a long speech and business plans and stuff without any product at the end.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://2.bp.blogspot.com/-aQ1ouoi1L9g/UTUBWlsehzI/AAAAAAAACV4/rm3VNg-gEEc/s400/374441_422045311215085_210630466_n.jpg&quot; alt=&quot;Build&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;5_never_give_up&quot;&gt;5. Never give up:&lt;/h2&gt;
+
+&lt;p&gt;Another thing I learnt from this Hackathon is that one should never give up when it comes to doing something that he loves. I have been with a team at the beginning than the organizers said that our team was too big so I changed the team, then, in the second day, we completely changed the idea.. I have to confess that at some moment I lost confidence, I was like : “what the hell is happening to me?” because time is moving on. So we decided to keep the two ideas and divided tasks, we wanted to incorporate a game inside our app, but in the third day we realized that it was not evident to port a windows phone 7 game to windows 8! We decided then to create our own new game.. It was so stressful but it was really funny because the team I was with is the most awesome team I have ever been with!&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://3.bp.blogspot.com/-zkFuzZi2Cwg/UTT6dh0He_I/AAAAAAAACVQ/r_e7KLf6orA/s400/644527_419439514817535_728640288_n.jpg&quot; alt=&quot;Give Up&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;6_improve_your_english_youll_need_it&quot;&gt;6. Improve your English! You’ll need it:&lt;/h2&gt;
+
+&lt;p&gt;If there is one thing I could advise my peers in Algeria, is to learn and practice English. I am telling you that, because I personally found some difficulties especially at the first time, because here in Algeria we study in french so it’s difficult for someone who has never talked in English before to express himself and his ideas with people that does not understand French. So, please, speak in English! Even if you think that you are very bad but just go on and try to practice it with your friends and everyone who can understand you.. or cannot! Because french is not going to help you outside France and some other countries but English is boundless, you can use it everywhere.. Trust me, Start today !&lt;/p&gt;
+
+&lt;h2 id=&quot;7_dont_be_too_serious_have_fun_&quot;&gt;7. Don’t be too serious! Have fun !&lt;/h2&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://1.bp.blogspot.com/-o-IxpbhMNKI/UTUHuKjJLzI/AAAAAAAACWA/aSFnee4HcJM/s400/526163_419439521484201_2079321513_n.jpg&quot; alt=&quot;Fun&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Here is the &lt;a href=&quot;http://nyuad.nyu.edu/hackathon/projects/&quot;&gt;list&lt;/a&gt; of all the projects! (4.)&lt;/p&gt;
+
+&lt;p&gt;Finally, I want to thank all of the organizers for making this opportunity happen in our region, we really need such initiatives! So let me thank prof. Sana’ Odeh for the amazing efforts she did for us, all the mentors especially David Tomczyk and Arnaud Sahuguet for their precious help. Looking forward to seeing you again next year.&lt;/p&gt;</content>
+ </entry>
+ 
+ <entry>
+   <title>This blog, what and why?</title>
+   <link href="http://walidlaribi.github.io/blog/2012/12/30/this-blog-what-and-why.html"/>
+   <updated>2012-12-30T00:00:00+01:00</updated>
+   <id>http://walidlaribi.github.io/blog/2012/12/30/this-blog-what-and-why</id>
+   <content type="html">&lt;p&gt;I’ve been thinking about my first blog post since two days, what the hell should it be about? I had many ideas, but i realized that the best thing to talk about as a first Article is the reason of creating this blog and what will it be about; So could know whether it interests you or not.&lt;/p&gt;
+
+&lt;p&gt;Well, I always wanted to discuss and share ideas with other people and I’m actually doing it through social networks such as &lt;a href=&quot;http://google.com/+WalidLaribi&quot;&gt;Google+&lt;/a&gt;, &lt;a href=&quot;http://facebook.com/walidalcherie&quot;&gt;Facebook&lt;/a&gt;, &lt;a href=&quot;http://twitter.com/walidalcherie&quot;&gt;Twitter&lt;/a&gt;, Skype and others. But the problem with these social networks is that the information that we write there is not easily found, easily linked to or searchable by other people, it remains in the website’s servers but we can not benefit from it after some moments. Unlike blogs, who are generally ‘public’, ‘searchable’, ‘relevant’ and ‘topics-oriented’. I’ve been inspired by &lt;a href=&quot;http://www.hanselman.com/&quot;&gt;Scott Hanselman&lt;/a&gt;’s blog post about blogging, he &lt;a href=&quot;http://www.hanselman.com/blog/YourBlogIsTheEngineOfCommunity.aspx&quot;&gt;said&lt;/a&gt;: “Write a few blog posts a week, with useful content, consistently, for ten years. Then write some more”.&lt;/p&gt;
+
+&lt;p&gt;The other reason that motivates me to create this blog is my participation in two conferences last week about Arabic content on the internet, this first one was held in Laghouat on Dec 18th, the &lt;a href=&quot;http://www.veecos.net/portal/index.php?option=com_content&amp;view=article&amp;id=9251:2012-12-22-10-13-00&amp;catid=28:activiteis-news&amp;Itemid=15&quot;&gt;second&lt;/a&gt; one in Algiers on Dec 20th, both of them were celebrating the &lt;a href=&quot;http://www.arabicwebdays.com/&quot;&gt;Arabic Web Days&lt;/a&gt; initiative. I talked during these two events about the State of the Arabic content on the WEB and i gave some solution to increase it, one of the solutions I gave was “Creating relevant blogs”, I realized then that even me I do not have a blog, Shame on me you’d say !&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://walidlaribi.github.io/assets/awd-alg.jpg&quot; alt=&quot;AWD Algiers&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;To give you a quick view about what this blog is all about, mainly, I’m going to write about technical staff (informatics to be clear), an important part of them will be in Arabic. Also, I will write about my personal projects like for example the story &lt;a href=&quot;http://halimlagrid.com/&quot;&gt;Halim&lt;/a&gt; and I are writing (في صحراء أُسياط). And of course I’ll write about our beloved group which is &lt;a href=&quot;https://plus.google.com/u/0/111309779341768878739/posts&quot;&gt;GDG Algiers&lt;/a&gt; (Google Developer Group Algiers) and its activities, highlighting the great experience we’re having together.&lt;/p&gt;
+
+&lt;p&gt;I think this is enough for a first post, I hope this hasn’t made you bored and thanks for your time, that’s all. :)&lt;/p&gt;</content>
+ </entry>
+ 
+ 
+</feed>

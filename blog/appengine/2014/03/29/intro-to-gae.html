@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Walid - An introduction to Google App Engine</title>
+  <meta name="author" content="Walid" />
+  <meta name="description" content="The blog of Walid" />
+  <link rel="canonical" href="http://walidlaribi.github.io/blog/appengine/2014/03/29/intro-to-gae.html" />
+
+  <link href="//fonts.googleapis.com/css?family=Open+Sans:600,800" rel="stylesheet" type="text/css">
+  <link rel="shortcut icon" href="/favicon.png">
+  <link rel="alternate" type="application/rss+xml" title="Walid" href="http://walidlaribi.github.io/atom.xml" />
+
+  <link rel="stylesheet" href="/assets/css/all.css">
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.1/css/font-awesome.min.css">
+</head>
+<body>
+  <div class="container">
+    <div class="four columns sidebar">
+      <nav>
+  <a href="/">
+    <img src="/logo.png" id="logo" alt="Walid Laribi" style="border-radius: 200px; width: 150px;"/>
+  </a>
+  <h2>Walid's blog</h2>
+  <hr/>
+  <ul>
+  <p>I write lines of code for a better tomorrow.</p>
+  <hr/>
+  <div>
+    <div id="social">
+      Follow me:
+<div id="stalker">
+  
+  <a title="walidlaribi on Github" href="https://github.com/walidlaribi">
+    <i class="fa fa-github-square"></i>
+  </a>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <a title="walidalcherie on Twitter" href="https://twitter.com/walidalcherie">
+    <i class="fa fa-twitter-square"></i>
+  </a>
+  
+
+  
+  <a title="Walid on Facebook" href="https://facebook.com/walidalcherie">
+    <i class="fa fa-facebook-square"></i>
+  </a>
+  
+
+  
+
+  
+
+  
+  <a title="Walid on Google Plus" href="https://plus.google.com/+WalidLaribi">
+    <i class="fa fa-google-plus-square"></i>
+  </a>
+  
+
+  <a title="RSS feed" id="rss" href="/atom.xml">
+    <i class="fa fa-rss-square"></i>
+  </a>
+</div>
+
+    </div>
+  </div>
+  </ul>
+</nav>
+    </div>
+
+    <div class="eleven columns content">
+      <p class="meta">
+  March 29, 2014 
+  <a href="/">
+    <i class="home fa fa-home"></i>
+  </a>
+</p>
+
+<h1 class="title">An introduction to Google App Engine</h1>
+
+<div id="post">
+  <p>Nowadays, everyone is going <a href="http://en.wikipedia.org/wiki/Cloud_computing">cloud</a>, writing applications has never been easier when you just focus on them, no need to think about the infrastructure, the operating system, platforms’ versions, etc. One of the most powerful cloud platforms is <a href="https://cloud.google.com/‎">GCP</a> : Google Cloud Platform.</p>
+
+<p>Today we’re going to talk about <a href="https://appengine.google.com/">Google App Engine</a>, which is part of GCP and allows you to write scalable applications and deploy them to Google servers in minutes. You can read more about Google App Engine <a href="https://developers.google.com/appengine/">here</a>, and follow a very nice tuorial <a href="https://developers.google.com/appengine/docs/python/gettingstartedpython27/">here</a>. Basically, apps that run on App Engine are written in Python, Java, Go and PHP. In this tutorial we’re going to talk only about Python.</p>
+
+<p>When you write a GAE application with <a href="https://www.python.org/">python</a>, you have your <code>.py</code> files that are server side, and your <code>.html</code>, <code>.js</code> and <code>.css</code> files that are client side. You also have your <code>app.yaml</code> file which contains the global config of your application, it’s there where you put the name of your project, version, used libraries, etc.</p>
+
+<p>In order for your app to show in web browsers, it should contain <code>RequestHandlers</code> which are simply python classes that extend <code>webapp2.RequestHandler</code> class. Typically, a RequesHandler class contains a <code>get()</code> and a <code>post()</code> method to respond to <code>HTTP GET</code> and <code>HTTP POST</code> calls.</p>
+
+<p>Here is a simple example of a <code>RequestHandler</code> that shows a text in the browser:</p>
+<div class='highlight'><pre><code class='python'><span class='kn'>import</span> <span class='nn'>webapp2</span>
+
+<span class='k'>class</span> <span class='nc'>MainHandler</span><span class='p'>(</span><span class='n'>webapp2</span><span class='o'>.</span><span class='n'>RequestHandler</span><span class='p'>):</span>
+	<span class='k'>def</span> <span class='nf'>get</span><span class='p'>(</span><span class='bp'>self</span><span class='p'>):</span>
+		<span class='bp'>self</span><span class='o'>.</span><span class='n'>response</span><span class='o'>.</span><span class='n'>write</span><span class='p'>(</span><span class='s'>&#39;You have just wrote your first GAE application!&#39;</span><span class='p'>)</span>
+</code></pre></div>
+<p>As simple as that, if we run this application, we’ll get the following message on the browser: <img src="http://walidlaribi.github.io/assets/gae-first-example.png" alt="My helpful screenshot" /></p>
+
+<p>Now, let’s suppose that you need to show more beautiful pages to your users, with your own custom style and images and everything that people want to see, in this case, you need to use separate html files and then render them with values that you want to display to your users. We do this with <code>jinja2</code> and here is a very simple demo:</p>
+<div class='highlight'><pre><code class='python'><span class='kn'>import</span> <span class='nn'>webapp2</span>
+<span class='kn'>import</span> <span class='nn'>jinja2</span>
+<span class='kn'>import</span> <span class='nn'>os</span>
+
+<span class='n'>JINJA_ENVIRONMENT</span> <span class='o'>=</span> <span class='n'>jinja2</span><span class='o'>.</span><span class='n'>Environment</span><span class='p'>(</span>
+  <span class='n'>loader</span><span class='o'>=</span><span class='n'>jinja2</span><span class='o'>.</span><span class='n'>FileSystemLoader</span><span class='p'>(</span><span class='n'>os</span><span class='o'>.</span><span class='n'>path</span><span class='o'>.</span><span class='n'>dirname</span><span class='p'>(</span><span class='n'>__file__</span><span class='p'>)),</span>
+  <span class='n'>extensions</span><span class='o'>=</span><span class='p'>[</span><span class='s'>&#39;jinja2.ext.autoescape&#39;</span><span class='p'>])</span>
+
+<span class='n'>our_beautiful_page</span> <span class='o'>=</span> <span class='n'>JINJA_ENVIRONMENT</span><span class='o'>.</span><span class='n'>get_template</span><span class='p'>(</span><span class='s'>&#39;home.html&#39;</span><span class='p'>)</span>
+
+<span class='k'>class</span> <span class='nc'>MainHandler</span><span class='p'>(</span><span class='n'>webapp2</span><span class='o'>.</span><span class='n'>RequestHandler</span><span class='p'>):</span>
+	<span class='k'>def</span> <span class='nf'>get</span><span class='p'>(</span><span class='bp'>self</span><span class='p'>):</span>
+		<span class='bp'>self</span><span class='o'>.</span><span class='n'>response</span><span class='o'>.</span><span class='n'>write</span><span class='p'>(</span><span class='n'>our_beautiful_page</span><span class='o'>.</span><span class='n'>render</span><span class='p'>())</span>
+</code></pre></div>
+<p>This will display <code>home.html</code> on the browser.</p>
+
+<p><img src="http://walidlaribi.github.io/assets/gae-second-example.png" alt="My helpful screenshot" /></p>
+
+<p>If you want to send values from your class to your customized HTML page, you can do it like this:</p>
+
+<p>1- <code>our_beautiful_page.html</code>:</p>
+<div class='highlight'><pre><code class='html'><span class='nt'>&lt;h1</span> <span class='na'>style=</span><span class='s'>&quot;color: red;&quot;</span><span class='nt'>&gt;</span> Welcome mister: {{name}}<span class='nt'>&lt;/h1&gt;</span>
+</code></pre></div>
+<p>2- <code>main.py</code>:</p>
+<div class='highlight'><pre><code class='python'><span class='bp'>self</span><span class='o'>.</span><span class='n'>response</span><span class='o'>.</span><span class='n'>write</span><span class='p'>(</span><span class='n'>our_beautiful_page</span><span class='o'>.</span><span class='n'>render</span><span class='p'>(</span><span class='n'>name</span> <span class='o'>=</span> <span class='s'>&quot;John&quot;</span><span class='p'>))</span>
+</code></pre></div>
+<p>If you execute this code, you’ll get the following result on your browser:</p>
+
+<p><img src="http://walidlaribi.github.io/assets/gae-third-example.png" alt="My helpful screenshot" /></p>
+
+<h2 id="complete_working_code">Complete working code:</h2>
+
+<p>1- <code>app.yaml</code> file:</p>
+<div class='highlight'><pre><code class='python'><span class='n'>application</span><span class='p'>:</span> <span class='n'>my</span><span class='o'>-</span><span class='n'>first</span><span class='o'>-</span><span class='n'>gae</span><span class='o'>-</span><span class='n'>app</span>
+<span class='n'>version</span><span class='p'>:</span> <span class='mi'>1</span>
+<span class='n'>runtime</span><span class='p'>:</span> <span class='n'>python27</span>
+<span class='n'>api_version</span><span class='p'>:</span> <span class='mi'>1</span>
+<span class='n'>threadsafe</span><span class='p'>:</span> <span class='n'>yes</span>
+
+<span class='n'>handlers</span><span class='p'>:</span>
+<span class='o'>-</span> <span class='n'>url</span><span class='p'>:</span> <span class='o'>/</span><span class='n'>favicon</span>\<span class='o'>.</span><span class='n'>ico</span>
+  <span class='n'>static_files</span><span class='p'>:</span> <span class='n'>favicon</span><span class='o'>.</span><span class='n'>ico</span>
+  <span class='n'>upload</span><span class='p'>:</span> <span class='n'>favicon</span>\<span class='o'>.</span><span class='n'>ico</span>
+
+<span class='o'>-</span> <span class='n'>url</span><span class='p'>:</span> <span class='o'>.*</span>
+  <span class='n'>script</span><span class='p'>:</span> <span class='n'>main</span><span class='o'>.</span><span class='n'>app</span>
+
+<span class='n'>libraries</span><span class='p'>:</span>
+<span class='o'>-</span> <span class='n'>name</span><span class='p'>:</span> <span class='n'>webapp2</span>
+  <span class='n'>version</span><span class='p'>:</span> <span class='s'>&quot;2.5.2&quot;</span>
+<span class='o'>-</span> <span class='n'>name</span><span class='p'>:</span> <span class='n'>jinja2</span>
+  <span class='n'>version</span><span class='p'>:</span> <span class='n'>latest</span>
+</code></pre></div>
+<p>2- <code>main.py</code> file:</p>
+<div class='highlight'><pre><code class='python'><span class='kn'>import</span> <span class='nn'>webapp2</span>
+<span class='kn'>import</span> <span class='nn'>jinja2</span>
+<span class='kn'>import</span> <span class='nn'>os</span>
+
+<span class='n'>JINJA_ENVIRONMENT</span> <span class='o'>=</span> <span class='n'>jinja2</span><span class='o'>.</span><span class='n'>Environment</span><span class='p'>(</span>
+  <span class='n'>loader</span><span class='o'>=</span><span class='n'>jinja2</span><span class='o'>.</span><span class='n'>FileSystemLoader</span><span class='p'>(</span><span class='n'>os</span><span class='o'>.</span><span class='n'>path</span><span class='o'>.</span><span class='n'>dirname</span><span class='p'>(</span><span class='n'>__file__</span><span class='p'>)),</span>
+  <span class='n'>extensions</span><span class='o'>=</span><span class='p'>[</span><span class='s'>&#39;jinja2.ext.autoescape&#39;</span><span class='p'>])</span>
+
+<span class='n'>our_beautiful_page</span> <span class='o'>=</span> <span class='n'>JINJA_ENVIRONMENT</span><span class='o'>.</span><span class='n'>get_template</span><span class='p'>(</span><span class='s'>&#39;home.html&#39;</span><span class='p'>)</span>
+
+<span class='k'>class</span> <span class='nc'>MainHandler</span><span class='p'>(</span><span class='n'>webapp2</span><span class='o'>.</span><span class='n'>RequestHandler</span><span class='p'>):</span>
+	<span class='k'>def</span> <span class='nf'>get</span><span class='p'>(</span><span class='bp'>self</span><span class='p'>):</span>
+		<span class='bp'>self</span><span class='o'>.</span><span class='n'>response</span><span class='o'>.</span><span class='n'>write</span><span class='p'>(</span><span class='n'>our_beautiful_page</span><span class='o'>.</span><span class='n'>render</span><span class='p'>(</span><span class='n'>name</span> <span class='o'>=</span> <span class='s'>&quot;John&quot;</span><span class='p'>))</span>
+
+<span class='n'>app</span> <span class='o'>=</span> <span class='n'>webapp2</span><span class='o'>.</span><span class='n'>WSGIApplication</span><span class='p'>([</span>
+    <span class='p'>(</span><span class='s'>&#39;/&#39;</span><span class='p'>,</span> <span class='n'>MainHandler</span><span class='p'>)</span>
+<span class='p'>],</span> <span class='n'>debug</span><span class='o'>=</span><span class='bp'>True</span><span class='p'>)</span>
+</code></pre></div>
+<p>3- <code>our_beautiful_page.html</code> file:</p>
+<div class='highlight'><pre><code class='html'><span class='nt'>&lt;html&gt;</span>
+<span class='nt'>&lt;head&gt;</span>
+<span class='nt'>&lt;title&gt;</span>My first GAE application!<span class='nt'>&lt;/title&gt;</span>
+<span class='nt'>&lt;/head&gt;</span>
+<span class='nt'>&lt;body&gt;</span>
+
+<span class='nt'>&lt;h1</span> <span class='na'>style=</span><span class='s'>&quot;color: red;&quot;</span><span class='nt'>&gt;</span> Welcome mister: {{name}}<span class='nt'>&lt;/h1&gt;</span>
+
+<span class='nt'>&lt;/body&gt;</span>
+<span class='nt'>&lt;/html&gt;</span>
+</code></pre></div>
+<p>That’s all for now, hope to see you in the next tutorial and learn more stuff together,</p>
+</div>
+
+<div id="related">
+  <h3>Related Posts</h3>
+  <ul class="posts">
+    
+    <li>
+      <span>04 Mar 2013 &raquo;</span> <a href="/blog/stories/2013/03/04/nyuad-hackathon-2013.html">7 things I learnt from NYUAD Hackathon 2013 !</a>
+    </li>
+    
+    <li>
+      <span>30 Dec 2012 &raquo;</span> <a href="/blog/2012/12/30/this-blog-what-and-why.html">This blog, what and why?</a>
+    </li>
+    
+  </ul>
+</div>
+
+
+      <div class="footer">
+        <div class="disclaimer">
+  
+  <p>
+    The postings on this site are my own and don't necessarily represent my 
+    employer’s positions, strategies or opinions.
+  </p>
+  
+
+  <p>
+    © Walid, 2014 &mdash; built with Jekyll using Lagom theme
+  </p>
+</div>
+      </div>
+    </div>
+  </div>
+
+
+</body>
+</html>
