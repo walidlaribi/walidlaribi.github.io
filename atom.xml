@@ -4,7 +4,7 @@
  <title>The blog of Walid</title>
  <link href="http://walidlaribi.github.io/atom.xml" rel="self"/>
  <link href="http://walidlaribi.github.io"/>
- <updated>2014-03-29T18:45:48+01:00</updated>
+ <updated>2014-03-30T14:18:27+01:00</updated>
  <id>http://walidlaribi.github.io</id>
  <author>
    <name>Walid</name>
@@ -19,7 +19,7 @@
    <id>http://walidlaribi.github.io/blog/appengine/2014/03/29/intro-to-gae</id>
    <content type="html">&lt;p&gt;Nowadays, everyone is going &lt;a href=&quot;http://en.wikipedia.org/wiki/Cloud_computing&quot;&gt;cloud&lt;/a&gt;, writing applications has never been easier when you just focus on them, no need to think about the infrastructure, the operating system, platforms’ versions, etc. One of the most powerful cloud platforms is &lt;a href=&quot;https://cloud.google.com/‎&quot;&gt;GCP&lt;/a&gt; : Google Cloud Platform.&lt;/p&gt;
 
-&lt;p&gt;Today we’re going to talk about &lt;a href=&quot;https://appengine.google.com/&quot;&gt;Google App Engine&lt;/a&gt;, which is part of GCP and allows you to write scalable applications and deploy them to Google servers in minutes. You can read more about Google App Engine &lt;a href=&quot;https://developers.google.com/appengine/&quot;&gt;here&lt;/a&gt;, and follow a very nice tuorial &lt;a href=&quot;https://developers.google.com/appengine/docs/python/gettingstartedpython27/&quot;&gt;here&lt;/a&gt;. Basically, apps that run on App Engine are written in Python, Java, Go and PHP. In this tutorial we’re going to talk only about Python.&lt;/p&gt;
+&lt;p&gt;Today we’re going to talk about &lt;a href=&quot;https://appengine.google.com/&quot;&gt;Google App Engine&lt;/a&gt;, which is part of GCP and allows you to write scalable applications and deploy them to Google servers in minutes. You can read more about Google App Engine &lt;a href=&quot;https://developers.google.com/appengine/&quot;&gt;here&lt;/a&gt;, and follow a very nice tutorial &lt;a href=&quot;https://developers.google.com/appengine/docs/python/gettingstartedpython27/&quot;&gt;here&lt;/a&gt;. Basically, apps that run on App Engine are written in Python, Java, Go and PHP. In this tutorial we’re going to talk only about Python.&lt;/p&gt;
 
 &lt;p&gt;When you write a GAE application with &lt;a href=&quot;https://www.python.org/&quot;&gt;python&lt;/a&gt;, you have your &lt;code&gt;.py&lt;/code&gt; files that are server side, and your &lt;code&gt;.html&lt;/code&gt;, &lt;code&gt;.js&lt;/code&gt; and &lt;code&gt;.css&lt;/code&gt; files that are client side. You also have your &lt;code&gt;app.yaml&lt;/code&gt; file which contains the global config of your application, it’s there where you put the name of your project, version, used libraries, etc.&lt;/p&gt;
 
@@ -119,7 +119,12 @@
 &lt;span class=&#39;nt&#39;&gt;&amp;lt;/body&amp;gt;&lt;/span&gt;
 &lt;span class=&#39;nt&#39;&gt;&amp;lt;/html&amp;gt;&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;That’s all for now, hope to see you in the next tutorial and learn more stuff together,&lt;/p&gt;</content>
+&lt;p&gt;That’s all for now, hope to see you in the next tutorial and learn more stuff together,&lt;/p&gt;
+
+&lt;p&gt;Meanwhile, you can see this video in order to get a better vision about Google Cloud Platform.&lt;/p&gt;
+&lt;center&gt;
+&lt;iframe frameborder=&#39;0&#39; height=&#39;315&#39; src=&#39;//www.youtube.com/embed/xuPKrjJ8Ijs&#39; width=&#39;560&#39;&gt; &lt;/iframe&gt;
+&lt;/center&gt;</content>
  </entry>
  
  <entry>
