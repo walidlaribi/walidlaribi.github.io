@@ -4,13 +4,81 @@
  <title>The blog of Walid</title>
  <link href="http://walidlaribi.github.io/atom.xml" rel="self"/>
  <link href="http://walidlaribi.github.io"/>
- <updated>2014-03-30T14:18:27+01:00</updated>
+ <updated>2014-04-01T13:47:08+01:00</updated>
  <id>http://walidlaribi.github.io</id>
  <author>
    <name>Walid</name>
    <email>laribiwalid@gmail.com</email>
  </author>
 
+ 
+ <entry>
+   <title>Gmail Shelfie, revealed!</title>
+   <link href="http://walidlaribi.github.io/blog/google/2014/04/01/shelfie-revealed.html"/>
+   <updated>2014-04-01T00:00:00+01:00</updated>
+   <id>http://walidlaribi.github.io/blog/google/2014/04/01/shelfie-revealed</id>
+   <content type="html">&lt;p&gt;Today, is April 1st and usual Google has announced &lt;a href=&quot;http://thenextweb.com/google/2014/03/31/round-googles-jokes-april-fools-day-2014/&quot;&gt;many&lt;/a&gt; April fools.&lt;/p&gt;
+
+&lt;p&gt;I personally liked the &lt;a href=&quot;http://gmailblog.blogspot.com/2014/03/introducing-gmail-shelfie.html&quot;&gt;Gmail Shelfie&lt;/a&gt;, it’s just cool. Each time you open your email you could see some selfies (sometimes pretty ones :p). It seemed weird to me, why should Google add such feature to Gmail just for April 1st ??&lt;/p&gt;
+
+&lt;p&gt;So I fired up my console I clicked the famous “Inspect Element” on the images to see how it is working, I figured out that they’re just using static images and there is no such a service behind. So let’s discover all the 27 beautiful high resolution slefies that Google made to let us seem stupid by believing it was a new addition to Gmail!&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://ssl.gstatic.com/ui/v1/icons/mail/themes/trending/bg_slot_10_1280x800_1396040832.jpg&quot;&gt;Photo 00&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://ssl.gstatic.com/ui/v1/icons/mail/themes/trending/bg_slot_11_1280x800_1396040832.jpg&quot;&gt;Photo 01&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://ssl.gstatic.com/ui/v1/icons/mail/themes/trending/bg_slot_12_1280x800_1396040832.jpg&quot;&gt;Photo 02&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://ssl.gstatic.com/ui/v1/icons/mail/themes/trending/bg_slot_13_1280x800_1396040832.jpg&quot;&gt;Photo 03&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://ssl.gstatic.com/ui/v1/icons/mail/themes/trending/bg_slot_14_1280x800_1396040832.jpg&quot;&gt;Photo 04&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://ssl.gstatic.com/ui/v1/icons/mail/themes/trending/bg_slot_15_1280x800_1396040832.jpg&quot;&gt;Photo 05&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://ssl.gstatic.com/ui/v1/icons/mail/themes/trending/bg_slot_16_1280x800_1396040832.jpg&quot;&gt;Photo 06&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://ssl.gstatic.com/ui/v1/icons/mail/themes/trending/bg_slot_17_1280x800_1396040832.jpg&quot;&gt;Photo 07&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://ssl.gstatic.com/ui/v1/icons/mail/themes/trending/bg_slot_18_1280x800_1396040832.jpg&quot;&gt;Photo 08&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://ssl.gstatic.com/ui/v1/icons/mail/themes/trending/bg_slot_19_1280x800_1396040832.jpg&quot;&gt;Photo 09&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://ssl.gstatic.com/ui/v1/icons/mail/themes/trending/bg_slot_20_1280x800_1396040832.jpg&quot;&gt;Photo 10&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://ssl.gstatic.com/ui/v1/icons/mail/themes/trending/bg_slot_21_1280x800_1396040832.jpg&quot;&gt;Photo 11&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://ssl.gstatic.com/ui/v1/icons/mail/themes/trending/bg_slot_22_1280x800_1396040832.jpg&quot;&gt;Photo 12&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://ssl.gstatic.com/ui/v1/icons/mail/themes/trending/bg_slot_23_1280x800_1396040832.jpg&quot;&gt;Photo 13&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://ssl.gstatic.com/ui/v1/icons/mail/themes/trending/bg_slot_24_1280x800_1396040832.jpg&quot;&gt;Photo 14&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://ssl.gstatic.com/ui/v1/icons/mail/themes/trending/bg_slot_25_1280x800_1396040832.jpg&quot;&gt;Photo 15&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://ssl.gstatic.com/ui/v1/icons/mail/themes/trending/bg_slot_26_1280x800_1396040832.jpg&quot;&gt;Photo 16&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://ssl.gstatic.com/ui/v1/icons/mail/themes/trending/bg_slot_27_1280x800_1396040832.jpg&quot;&gt;Photo 17&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://ssl.gstatic.com/ui/v1/icons/mail/themes/trending/bg_slot_28_1280x800_1396040832.jpg&quot;&gt;Photo 18&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://ssl.gstatic.com/ui/v1/icons/mail/themes/trending/bg_slot_29_1280x800_1396040832.jpg&quot;&gt;Photo 19&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://ssl.gstatic.com/ui/v1/icons/mail/themes/trending/bg_slot_30_1280x800_1396040832.jpg&quot;&gt;Photo 20&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://ssl.gstatic.com/ui/v1/icons/mail/themes/trending/bg_slot_31_1280x800_1396040832.jpg&quot;&gt;Photo 21&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://ssl.gstatic.com/ui/v1/icons/mail/themes/trending/bg_slot_32_1280x800_1396040832.jpg&quot;&gt;Photo 22&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://ssl.gstatic.com/ui/v1/icons/mail/themes/trending/bg_slot_33_1280x800_1396040832.jpg&quot;&gt;Photo 23&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://ssl.gstatic.com/ui/v1/icons/mail/themes/trending/bg_slot_34_1280x800_1396040832.jpg&quot;&gt;Photo 24&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://ssl.gstatic.com/ui/v1/icons/mail/themes/trending/bg_slot_35_1280x800_1396040832.jpg&quot;&gt;Photo 25&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://ssl.gstatic.com/ui/v1/icons/mail/themes/trending/bg_slot_36_1280x800_1396040832.jpg&quot;&gt;Photo 26&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;I’ll let you find the link between these images ;)&lt;/p&gt;</content>
+ </entry>
  
  <entry>
    <title>An introduction to Google App Engine</title>
