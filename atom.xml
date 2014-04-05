@@ -4,13 +4,357 @@
  <title>The blog of Walid</title>
  <link href="http://walidlaribi.github.io/atom.xml" rel="self"/>
  <link href="http://walidlaribi.github.io"/>
- <updated>2014-04-01T13:47:08+01:00</updated>
+ <updated>2014-04-04T23:33:12+01:00</updated>
  <id>http://walidlaribi.github.io</id>
  <author>
    <name>Walid</name>
    <email>laribiwalid@gmail.com</email>
  </author>
 
+ 
+ <entry>
+   <title>Let's geek out!</title>
+   <link href="http://walidlaribi.github.io/blog/web/2014/04/05/lets-geek-out.html"/>
+   <updated>2014-04-05T00:00:00+01:00</updated>
+   <id>http://walidlaribi.github.io/blog/web/2014/04/05/lets-geek-out</id>
+   <content type="html">&lt;p&gt;I was looking at this year’s &lt;a href=&quot;https://www.google.com/events/io/&quot;&gt;Google I/O website&lt;/a&gt;, please take a look at it. This is the design I really love: Simple, flat, creative and modern! My hope every web designer/developer get inspired by this website in the future for better quality!&lt;/p&gt;
+
+&lt;p&gt;If you notice in the second screen of the website, you’ll find a nice photo and some text that is being written continuously on top of it with some cool words: Let’s geek out, Let’s hack, Let’s reboot, Let’s do this, etc.&lt;/p&gt;
+
+&lt;p&gt;I personally liked it so much and found it original, so today, we’re going to recreate it with HTML, Javascript and CSS3. This is going to be very simple, even if you don’t have a lot of knowledge in JS or CSS3 you can easily follow the tutorial and understand how it is working.&lt;/p&gt;
+
+&lt;h2 id=&quot;lets_start&quot;&gt;Let’s start!&lt;/h2&gt;
+
+&lt;p&gt;First of all, we have to define the structure of our HTML page. We should put a background image, inside it we have a static text (Let’s), next to it a dynamic text (geek out) and finally a blinking cursor. So we will have the following structure:&lt;/p&gt;
+&lt;div class=&#39;highlight&#39;&gt;&lt;pre&gt;&lt;code class=&#39;html&#39;&gt;&lt;span class=&#39;nt&#39;&gt;&amp;lt;section&lt;/span&gt; &lt;span class=&#39;na&#39;&gt;class=&lt;/span&gt;&lt;span class=&#39;s&#39;&gt;&amp;quot;background&amp;quot;&lt;/span&gt;&lt;span class=&#39;nt&#39;&gt;&amp;gt;&lt;/span&gt;
+	&lt;span class=&#39;nt&#39;&gt;&amp;lt;section&lt;/span&gt; &lt;span class=&#39;na&#39;&gt;class=&lt;/span&gt;&lt;span class=&#39;s&#39;&gt;&amp;quot;text&amp;quot;&lt;/span&gt;&lt;span class=&#39;nt&#39;&gt;&amp;gt;&lt;/span&gt;
+		&lt;span class=&#39;nt&#39;&gt;&amp;lt;span&lt;/span&gt; &lt;span class=&#39;na&#39;&gt;class=&lt;/span&gt;&lt;span class=&#39;s&#39;&gt;&amp;quot;static-word&amp;quot;&lt;/span&gt;&lt;span class=&#39;nt&#39;&gt;&amp;gt;&lt;/span&gt;Let&amp;#39;s&lt;span class=&#39;nt&#39;&gt;&amp;lt;/span&amp;gt;&lt;/span&gt;
+		&lt;span class=&#39;nt&#39;&gt;&amp;lt;span&lt;/span&gt; &lt;span class=&#39;na&#39;&gt;id=&lt;/span&gt;&lt;span class=&#39;s&#39;&gt;&amp;quot;type-out__word&amp;quot;&lt;/span&gt;&lt;span class=&#39;nt&#39;&gt;&amp;gt;&lt;/span&gt;(dynamic text)&lt;span class=&#39;nt&#39;&gt;&amp;lt;/span&amp;gt;&lt;/span&gt;
+		&lt;span class=&#39;nt&#39;&gt;&amp;lt;span&lt;/span&gt; &lt;span class=&#39;na&#39;&gt;class=&lt;/span&gt;&lt;span class=&#39;s&#39;&gt;&amp;quot;type-out__beam blink&amp;quot;&lt;/span&gt;&lt;span class=&#39;nt&#39;&gt;&amp;gt;&lt;/span&gt;&lt;span class=&#39;ni&#39;&gt;&amp;amp;nbsp;&lt;/span&gt;&lt;span class=&#39;nt&#39;&gt;&amp;lt;/span&amp;gt;&lt;/span&gt;
+	&lt;span class=&#39;nt&#39;&gt;&amp;lt;/section&amp;gt;&lt;/span&gt;
+&lt;span class=&#39;nt&#39;&gt;&amp;lt;/section&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;This is our file structure, very simple! Now we need to add a script in order to manipulate this document and add our typing effect to it. I’ll first explain how does it work. First, we will define an array of words that are going to be written in the dynamic text containet span. Then, we will use Javascript timing methods &lt;code&gt;setInterval()&lt;/code&gt; and &lt;code&gt;setTimeout()&lt;/code&gt; for the delays, so the text will not appear at once, but we’ll simulate the writing instead.&lt;/p&gt;
+
+&lt;p&gt;Javascript’s &lt;code&gt;setInterval()&lt;/code&gt; method takes two arguments, a callback and a time interval just like this:&lt;/p&gt;
+&lt;div class=&#39;highlight&#39;&gt;&lt;pre&gt;&lt;code class=&#39;javascript&#39;&gt;&lt;span class=&#39;nx&#39;&gt;setInterval&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;(&lt;/span&gt;&lt;span class=&#39;kd&#39;&gt;function&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;()&lt;/span&gt; &lt;span class=&#39;p&#39;&gt;{&lt;/span&gt; &lt;span class=&#39;c1&#39;&gt;//do stuff here; }, 1000); //interval in milliseconds&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;This means that anything you put in the &lt;code&gt;//do stuff here;&lt;/code&gt; section will be executed repeatedly every 1 second. If you want to stop this execution, then you’ll have to call the &lt;code&gt;clearInterval()&lt;/code&gt; method, by giving the name of your &lt;code&gt;setInterval()&lt;/code&gt; method as a parameter just like this:&lt;/p&gt;
+&lt;div class=&#39;highlight&#39;&gt;&lt;pre&gt;&lt;code class=&#39;javascript&#39;&gt;&lt;span class=&#39;kd&#39;&gt;var&lt;/span&gt; &lt;span class=&#39;nx&#39;&gt;myIntervalMethod&lt;/span&gt; &lt;span class=&#39;o&#39;&gt;=&lt;/span&gt; &lt;span class=&#39;nx&#39;&gt;setInterval&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;(&lt;/span&gt;&lt;span class=&#39;kd&#39;&gt;function&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;()&lt;/span&gt; &lt;span class=&#39;p&#39;&gt;{&lt;/span&gt; &lt;span class=&#39;c1&#39;&gt;//do stuff here; }, 1000); //interval in milliseconds&lt;/span&gt;
+&lt;span class=&#39;nx&#39;&gt;clearInterval&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;(&lt;/span&gt;&lt;span class=&#39;nx&#39;&gt;myIntervalMethod&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;);&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;The other timing method that we’re going to use is the &lt;code&gt;setTimeout()&lt;/code&gt; method which works like &lt;code&gt;setInterval()&lt;/code&gt; but it executes the callback method only once. It’s like you’re telling your brwoser: Okay, please wait 1000 milliseconds, then execute this callback method.&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;You can read more about Javascript’s timing methods by following &lt;a href=&quot;www.w3schools.com/js/js_timing.asp&quot;&gt;THIS&lt;/a&gt; link.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;So here is our Javascript code to simulate the typing:&lt;/p&gt;
+&lt;div class=&#39;highlight&#39;&gt;&lt;pre&gt;&lt;code class=&#39;javascript&#39;&gt;&lt;span class=&#39;c1&#39;&gt;//First, we get our span in which we&amp;#39;re going to display dynamic text.&lt;/span&gt;
+&lt;span class=&#39;kd&#39;&gt;var&lt;/span&gt; &lt;span class=&#39;nx&#39;&gt;word_holder&lt;/span&gt; &lt;span class=&#39;o&#39;&gt;=&lt;/span&gt; &lt;span class=&#39;nb&#39;&gt;document&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;.&lt;/span&gt;&lt;span class=&#39;nx&#39;&gt;getElementById&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;(&lt;/span&gt;&lt;span class=&#39;s2&#39;&gt;&amp;quot;type-out__word&amp;quot;&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;);&lt;/span&gt;
+
+&lt;span class=&#39;c1&#39;&gt;//We define our array of words that we want to display, you can add as many words as you want.&lt;/span&gt;
+&lt;span class=&#39;kd&#39;&gt;var&lt;/span&gt; &lt;span class=&#39;nx&#39;&gt;words&lt;/span&gt; &lt;span class=&#39;o&#39;&gt;=&lt;/span&gt; &lt;span class=&#39;p&#39;&gt;[&lt;/span&gt;&lt;span class=&#39;s1&#39;&gt;&amp;#39;geek out&amp;#39;&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;,&lt;/span&gt; &lt;span class=&#39;s1&#39;&gt;&amp;#39;break stuff&amp;#39;&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;,&lt;/span&gt; &lt;span class=&#39;s1&#39;&gt;&amp;#39;reboot&amp;#39;&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;,&lt;/span&gt; &lt;span class=&#39;s1&#39;&gt;&amp;#39;hack&amp;#39;&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;,&lt;/span&gt; &lt;span class=&#39;s1&#39;&gt;&amp;#39;grab a drink&amp;#39;&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;,&lt;/span&gt; &lt;span class=&#39;s1&#39;&gt;&amp;#39;do this&amp;#39;&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;,&lt;/span&gt; &lt;span class=&#39;s1&#39;&gt;&amp;#39;create&amp;#39;&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;,&lt;/span&gt; &lt;span class=&#39;s1&#39;&gt;&amp;#39;learn&amp;#39;&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;,&lt;/span&gt; &lt;span class=&#39;s1&#39;&gt;&amp;#39;invent&amp;#39;&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;];&lt;/span&gt;
+
+&lt;span class=&#39;c1&#39;&gt;//word_index is the index in the array of the word being typed.&lt;/span&gt;
+&lt;span class=&#39;kd&#39;&gt;var&lt;/span&gt; &lt;span class=&#39;nx&#39;&gt;word_index&lt;/span&gt; &lt;span class=&#39;o&#39;&gt;=&lt;/span&gt; &lt;span class=&#39;mi&#39;&gt;0&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;;&lt;/span&gt;
+
+&lt;span class=&#39;c1&#39;&gt;//char_index is the index in the word of the character being typed.&lt;/span&gt;
+&lt;span class=&#39;kd&#39;&gt;var&lt;/span&gt; &lt;span class=&#39;nx&#39;&gt;char_index&lt;/span&gt; &lt;span class=&#39;o&#39;&gt;=&lt;/span&gt; &lt;span class=&#39;mi&#39;&gt;0&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;;&lt;/span&gt;
+
+&lt;span class=&#39;c1&#39;&gt;//we tell the browser to execute writeText() method every 50 milliseconds.&lt;/span&gt;
+&lt;span class=&#39;nx&#39;&gt;myWriteInterval&lt;/span&gt; &lt;span class=&#39;o&#39;&gt;=&lt;/span&gt; &lt;span class=&#39;nx&#39;&gt;setInterval&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;(&lt;/span&gt;&lt;span class=&#39;kd&#39;&gt;function&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;()&lt;/span&gt; &lt;span class=&#39;p&#39;&gt;{&lt;/span&gt; &lt;span class=&#39;nx&#39;&gt;writeText&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;()&lt;/span&gt; &lt;span class=&#39;p&#39;&gt;},&lt;/span&gt; &lt;span class=&#39;mi&#39;&gt;50&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;);&lt;/span&gt;
+
+&lt;span class=&#39;c1&#39;&gt;//we define writeText() method responsible of typing characters in the dynamic text span.&lt;/span&gt;
+&lt;span class=&#39;kd&#39;&gt;function&lt;/span&gt; &lt;span class=&#39;nx&#39;&gt;writeText&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;()&lt;/span&gt; &lt;span class=&#39;p&#39;&gt;{&lt;/span&gt;
+	&lt;span class=&#39;c1&#39;&gt;//we add the character in char_index position of the word_index word to our span&amp;#39;s innnerHTML.&lt;/span&gt;
+	&lt;span class=&#39;nx&#39;&gt;word_holder&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;.&lt;/span&gt;&lt;span class=&#39;nx&#39;&gt;innerHTML&lt;/span&gt; &lt;span class=&#39;o&#39;&gt;+=&lt;/span&gt; &lt;span class=&#39;nx&#39;&gt;words&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;[&lt;/span&gt;&lt;span class=&#39;nx&#39;&gt;word_index&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;][&lt;/span&gt;&lt;span class=&#39;nx&#39;&gt;char_index&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;];&lt;/span&gt;
+	&lt;span class=&#39;c1&#39;&gt;//increment the char_index to write the next character during the next call of the method&lt;/span&gt;
+	&lt;span class=&#39;nx&#39;&gt;char_index&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;++&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;;&lt;/span&gt;
+	&lt;span class=&#39;c1&#39;&gt;//if we&amp;#39;ve just types the last character of a word, increment word_index and call stopInterval() to wait a little bit.&lt;/span&gt;
+	&lt;span class=&#39;k&#39;&gt;if&lt;/span&gt; &lt;span class=&#39;p&#39;&gt;(&lt;/span&gt;&lt;span class=&#39;nx&#39;&gt;char_index&lt;/span&gt; &lt;span class=&#39;o&#39;&gt;==&lt;/span&gt; &lt;span class=&#39;nx&#39;&gt;words&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;[&lt;/span&gt;&lt;span class=&#39;nx&#39;&gt;word_index&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;].&lt;/span&gt;&lt;span class=&#39;nx&#39;&gt;length&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;)&lt;/span&gt; &lt;span class=&#39;p&#39;&gt;{&lt;/span&gt;
+		&lt;span class=&#39;nx&#39;&gt;word_index&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;++&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;;&lt;/span&gt;
+		&lt;span class=&#39;nx&#39;&gt;char_index&lt;/span&gt; &lt;span class=&#39;o&#39;&gt;=&lt;/span&gt; &lt;span class=&#39;mi&#39;&gt;0&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;;&lt;/span&gt;
+		&lt;span class=&#39;nx&#39;&gt;stopInterval&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;();&lt;/span&gt;
+	&lt;span class=&#39;p&#39;&gt;};&lt;/span&gt;
+	&lt;span class=&#39;c1&#39;&gt;//if we&amp;#39;ve just wrote the last word of the array, we start over.&lt;/span&gt;
+	&lt;span class=&#39;k&#39;&gt;if&lt;/span&gt; &lt;span class=&#39;p&#39;&gt;(&lt;/span&gt;&lt;span class=&#39;nx&#39;&gt;word_index&lt;/span&gt; &lt;span class=&#39;o&#39;&gt;==&lt;/span&gt; &lt;span class=&#39;nx&#39;&gt;words&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;.&lt;/span&gt;&lt;span class=&#39;nx&#39;&gt;length&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;)&lt;/span&gt; &lt;span class=&#39;p&#39;&gt;{&lt;/span&gt;
+		&lt;span class=&#39;nx&#39;&gt;word_index&lt;/span&gt; &lt;span class=&#39;o&#39;&gt;=&lt;/span&gt; &lt;span class=&#39;mi&#39;&gt;0&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;;&lt;/span&gt;
+	&lt;span class=&#39;p&#39;&gt;};&lt;/span&gt;
+&lt;span class=&#39;p&#39;&gt;}&lt;/span&gt;
+
+&lt;span class=&#39;c1&#39;&gt;//we define our stopInterval() method responsible of pausing the typing a little bit and then restarting it.&lt;/span&gt;
+&lt;span class=&#39;kd&#39;&gt;function&lt;/span&gt; &lt;span class=&#39;nx&#39;&gt;stopInterval&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;()&lt;/span&gt; &lt;span class=&#39;p&#39;&gt;{&lt;/span&gt;
+	&lt;span class=&#39;c1&#39;&gt;//clearInterval() stops the actual execution of myWriteInterval function.&lt;/span&gt;
+	&lt;span class=&#39;nx&#39;&gt;clearInterval&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;(&lt;/span&gt;&lt;span class=&#39;nx&#39;&gt;myWriteInterval&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;);&lt;/span&gt;
+
+	&lt;span class=&#39;c1&#39;&gt;//here we call setTimeout() in order to wait 3 seconds before calling myWriteInterval again to fire up the typing of the next word.&lt;/span&gt;
+	&lt;span class=&#39;nx&#39;&gt;setTimeout&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;(&lt;/span&gt;&lt;span class=&#39;kd&#39;&gt;function&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;()&lt;/span&gt; &lt;span class=&#39;p&#39;&gt;{&lt;/span&gt; 
+		&lt;span class=&#39;c1&#39;&gt;//we clear the content of our span.&lt;/span&gt;
+		&lt;span class=&#39;nx&#39;&gt;word_holder&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;.&lt;/span&gt;&lt;span class=&#39;nx&#39;&gt;innerHTML&lt;/span&gt; &lt;span class=&#39;o&#39;&gt;=&lt;/span&gt; &lt;span class=&#39;s2&#39;&gt;&amp;quot;&amp;quot;&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;;&lt;/span&gt;
+		&lt;span class=&#39;nx&#39;&gt;myWriteInterval&lt;/span&gt; &lt;span class=&#39;o&#39;&gt;=&lt;/span&gt; &lt;span class=&#39;nx&#39;&gt;setInterval&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;(&lt;/span&gt;&lt;span class=&#39;kd&#39;&gt;function&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;()&lt;/span&gt; &lt;span class=&#39;p&#39;&gt;{&lt;/span&gt; &lt;span class=&#39;nx&#39;&gt;writeText&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;()&lt;/span&gt; &lt;span class=&#39;p&#39;&gt;},&lt;/span&gt; &lt;span class=&#39;mi&#39;&gt;50&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;);&lt;/span&gt; 
+	&lt;span class=&#39;p&#39;&gt;},&lt;/span&gt; &lt;span class=&#39;mi&#39;&gt;3000&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;);&lt;/span&gt;
+&lt;span class=&#39;p&#39;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;If you execute this code now, it should display “Let’s ” plus a word from the array with typing being simulated and all. This is perfect. But you will notice that it just doesn’t look like Google’s one, ours is ugly! Of course, here is when CSS comes into the game :)&lt;/p&gt;
+
+&lt;p&gt;In order for our page to look more beautiful, we will add the following styling to it, nothing special.&lt;/p&gt;
+&lt;div class=&#39;highlight&#39;&gt;&lt;pre&gt;&lt;code class=&#39;css&#39;&gt;&lt;span class=&#39;o&#39;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#39;nt&#39;&gt;style&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;&amp;gt;&lt;/span&gt;
+&lt;span class=&#39;k&#39;&gt;@import&lt;/span&gt; &lt;span class=&#39;nt&#39;&gt;url&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;(&lt;/span&gt;&lt;span class=&#39;nt&#39;&gt;http&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;://&lt;/span&gt;&lt;span class=&#39;nt&#39;&gt;fonts&lt;/span&gt;&lt;span class=&#39;nc&#39;&gt;.googleapis.com&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;/&lt;/span&gt;&lt;span class=&#39;nt&#39;&gt;css&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;?&lt;/span&gt;&lt;span class=&#39;nt&#39;&gt;family&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;=&lt;/span&gt;&lt;span class=&#39;nt&#39;&gt;Roboto&lt;/span&gt;&lt;span class=&#39;nd&#39;&gt;:100&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;,&lt;/span&gt;&lt;span class=&#39;nt&#39;&gt;400&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;)&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;;&lt;/span&gt;
+
+&lt;span class=&#39;nc&#39;&gt;.type-out__beam&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;{&lt;/span&gt;
+	&lt;span class=&#39;k&#39;&gt;display&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;:&lt;/span&gt;&lt;span class=&#39;k&#39;&gt;inline&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;-&lt;/span&gt;&lt;span class=&#39;k&#39;&gt;block&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;;&lt;/span&gt;
+	&lt;span class=&#39;k&#39;&gt;margin-bottom&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;:-&lt;/span&gt;&lt;span class=&#39;m&#39;&gt;0.12em&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;;&lt;/span&gt;
+	&lt;span class=&#39;k&#39;&gt;width&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;:&lt;/span&gt;&lt;span class=&#39;m&#39;&gt;0.04545em&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;;&lt;/span&gt;
+	&lt;span class=&#39;k&#39;&gt;line-height&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;:&lt;/span&gt;&lt;span class=&#39;m&#39;&gt;1&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;;&lt;/span&gt;
+	&lt;span class=&#39;k&#39;&gt;min-width&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;:&lt;/span&gt;&lt;span class=&#39;m&#39;&gt;1px&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;;&lt;/span&gt;
+	&lt;span class=&#39;k&#39;&gt;background-color&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;:&lt;/span&gt;&lt;span class=&#39;m&#39;&gt;#fee94e&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;;&lt;/span&gt;
+	&lt;span class=&#39;k&#39;&gt;vertical-align&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;:&lt;/span&gt;&lt;span class=&#39;k&#39;&gt;baseline&lt;/span&gt;
+&lt;span class=&#39;p&#39;&gt;}&lt;/span&gt;
+
+&lt;span class=&#39;nc&#39;&gt;.static-word&lt;/span&gt; &lt;span class=&#39;p&#39;&gt;{&lt;/span&gt;
+	&lt;span class=&#39;k&#39;&gt;color&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;:&lt;/span&gt; &lt;span class=&#39;nb&#39;&gt;white&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;;&lt;/span&gt;
+&lt;span class=&#39;p&#39;&gt;}&lt;/span&gt;
+
+&lt;span class=&#39;nc&#39;&gt;.background&lt;/span&gt; &lt;span class=&#39;p&#39;&gt;{&lt;/span&gt;
+	&lt;span class=&#39;k&#39;&gt;font-family&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;:&lt;/span&gt; &lt;span class=&#39;s1&#39;&gt;&amp;#39;Roboto&amp;#39;&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;,&lt;/span&gt; &lt;span class=&#39;k&#39;&gt;sans-serif&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;;&lt;/span&gt;
+	&lt;span class=&#39;k&#39;&gt;font-weight&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;:&lt;/span&gt;  &lt;span class=&#39;m&#39;&gt;100&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;;&lt;/span&gt;
+	&lt;span class=&#39;k&#39;&gt;font-size&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;:&lt;/span&gt; &lt;span class=&#39;m&#39;&gt;4.44444em&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;;&lt;/span&gt;
+	&lt;span class=&#39;k&#39;&gt;line-height&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;:&lt;/span&gt; &lt;span class=&#39;m&#39;&gt;1&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;.&lt;/span&gt;&lt;span class=&#39;m&#39;&gt;125&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;;&lt;/span&gt;
+	&lt;span class=&#39;k&#39;&gt;color&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;:&lt;/span&gt; &lt;span class=&#39;m&#39;&gt;#fee94e&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;;&lt;/span&gt;
+	&lt;span class=&#39;k&#39;&gt;background-image&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;:&lt;/span&gt;&lt;span class=&#39;sx&#39;&gt;url(&amp;quot;https://www.google.com/events/io/images/photos/experience-1400.jpg&amp;quot;)&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;;&lt;/span&gt;
+	&lt;span class=&#39;k&#39;&gt;height&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;:&lt;/span&gt;  &lt;span class=&#39;m&#39;&gt;500px&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;;&lt;/span&gt;
+	&lt;span class=&#39;k&#39;&gt;padding-top&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;:&lt;/span&gt; &lt;span class=&#39;m&#39;&gt;400px&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;;&lt;/span&gt;
+	&lt;span class=&#39;k&#39;&gt;margin&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;:&lt;/span&gt; &lt;span class=&#39;m&#39;&gt;0&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;;&lt;/span&gt;
+&lt;span class=&#39;p&#39;&gt;}&lt;/span&gt;
+
+&lt;span class=&#39;nc&#39;&gt;.text&lt;/span&gt; &lt;span class=&#39;p&#39;&gt;{&lt;/span&gt;
+	&lt;span class=&#39;k&#39;&gt;text-align&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;:&lt;/span&gt; &lt;span class=&#39;k&#39;&gt;center&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;;&lt;/span&gt;
+	&lt;span class=&#39;k&#39;&gt;font-weight&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;:&lt;/span&gt; &lt;span class=&#39;m&#39;&gt;400&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;;&lt;/span&gt;
+&lt;span class=&#39;p&#39;&gt;}&lt;/span&gt;
+&lt;span class=&#39;o&#39;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&#39;nt&#39;&gt;style&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Put all together and you should have the following result:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://walidlaribi.github.io/assets/type-out-first.png&quot; alt=&quot;Demo typing&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;You will tell me now that the cursor is not blinking like Google’s one! You are wright, because we haven’t add any CSS3 animations yet. Add the following code into your style:&lt;/p&gt;
+&lt;div class=&#39;highlight&#39;&gt;&lt;pre&gt;&lt;code class=&#39;css&#39;&gt;&lt;span class=&#39;k&#39;&gt;@-webkit-keyframes&lt;/span&gt; &lt;span class=&#39;nt&#39;&gt;blink&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;{&lt;/span&gt;
+	&lt;span class=&#39;nt&#39;&gt;0&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;%&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;{&lt;/span&gt;&lt;span class=&#39;k&#39;&gt;opacity&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;:&lt;/span&gt;&lt;span class=&#39;m&#39;&gt;1&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;}&lt;/span&gt;
+	&lt;span class=&#39;nt&#39;&gt;50&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;%&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;{&lt;/span&gt;&lt;span class=&#39;k&#39;&gt;opacity&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;:&lt;/span&gt;&lt;span class=&#39;m&#39;&gt;0&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;}&lt;/span&gt;
+&lt;span class=&#39;p&#39;&gt;}&lt;/span&gt;
+&lt;span class=&#39;k&#39;&gt;@-moz-keyframes&lt;/span&gt; &lt;span class=&#39;nt&#39;&gt;blink&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;{&lt;/span&gt;
+	&lt;span class=&#39;nt&#39;&gt;0&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;%&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;{&lt;/span&gt;&lt;span class=&#39;k&#39;&gt;opacity&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;:&lt;/span&gt;&lt;span class=&#39;m&#39;&gt;1&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;}&lt;/span&gt;
+	&lt;span class=&#39;nt&#39;&gt;50&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;%&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;{&lt;/span&gt;&lt;span class=&#39;k&#39;&gt;opacity&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;:&lt;/span&gt;&lt;span class=&#39;m&#39;&gt;0&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;}&lt;/span&gt;
+&lt;span class=&#39;p&#39;&gt;}&lt;/span&gt;
+&lt;span class=&#39;k&#39;&gt;@-ms-keyframes&lt;/span&gt; &lt;span class=&#39;nt&#39;&gt;blink&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;{&lt;/span&gt;
+	&lt;span class=&#39;nt&#39;&gt;0&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;%&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;{&lt;/span&gt;&lt;span class=&#39;k&#39;&gt;opacity&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;:&lt;/span&gt;&lt;span class=&#39;m&#39;&gt;1&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;}&lt;/span&gt;
+	&lt;span class=&#39;nt&#39;&gt;50&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;%&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;{&lt;/span&gt;&lt;span class=&#39;k&#39;&gt;opacity&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;:&lt;/span&gt;&lt;span class=&#39;m&#39;&gt;0&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;}&lt;/span&gt;
+&lt;span class=&#39;p&#39;&gt;}&lt;/span&gt;
+&lt;span class=&#39;k&#39;&gt;@keyframes&lt;/span&gt; &lt;span class=&#39;nt&#39;&gt;blink&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;{&lt;/span&gt;
+	&lt;span class=&#39;nt&#39;&gt;0&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;%&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;{&lt;/span&gt;&lt;span class=&#39;k&#39;&gt;opacity&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;:&lt;/span&gt;&lt;span class=&#39;m&#39;&gt;1&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;}&lt;/span&gt;
+	&lt;span class=&#39;nt&#39;&gt;50&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;%&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;{&lt;/span&gt;&lt;span class=&#39;k&#39;&gt;opacity&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;:&lt;/span&gt;&lt;span class=&#39;m&#39;&gt;0&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;}&lt;/span&gt;
+&lt;span class=&#39;p&#39;&gt;}&lt;/span&gt;
+
+&lt;span class=&#39;nc&#39;&gt;.type-out__beam.blink&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;{&lt;/span&gt;
+	&lt;span class=&#39;o&#39;&gt;-&lt;/span&gt;&lt;span class=&#39;n&#39;&gt;webkit&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;-&lt;/span&gt;&lt;span class=&#39;n&#39;&gt;animation&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;:&lt;/span&gt;&lt;span class=&#39;k&#39;&gt;blink&lt;/span&gt; &lt;span class=&#39;m&#39;&gt;1s&lt;/span&gt; &lt;span class=&#39;n&#39;&gt;step&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;-&lt;/span&gt;&lt;span class=&#39;n&#39;&gt;end&lt;/span&gt; &lt;span class=&#39;n&#39;&gt;infinite&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;;&lt;/span&gt;
+	&lt;span class=&#39;o&#39;&gt;-&lt;/span&gt;&lt;span class=&#39;n&#39;&gt;moz&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;-&lt;/span&gt;&lt;span class=&#39;n&#39;&gt;animation&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;:&lt;/span&gt;&lt;span class=&#39;k&#39;&gt;blink&lt;/span&gt; &lt;span class=&#39;m&#39;&gt;1s&lt;/span&gt; &lt;span class=&#39;n&#39;&gt;step&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;-&lt;/span&gt;&lt;span class=&#39;n&#39;&gt;end&lt;/span&gt; &lt;span class=&#39;n&#39;&gt;infinite&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;;&lt;/span&gt;
+	&lt;span class=&#39;o&#39;&gt;-&lt;/span&gt;&lt;span class=&#39;n&#39;&gt;o&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;-&lt;/span&gt;&lt;span class=&#39;n&#39;&gt;animation&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;:&lt;/span&gt;&lt;span class=&#39;k&#39;&gt;blink&lt;/span&gt; &lt;span class=&#39;m&#39;&gt;1s&lt;/span&gt; &lt;span class=&#39;n&#39;&gt;step&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;-&lt;/span&gt;&lt;span class=&#39;n&#39;&gt;end&lt;/span&gt; &lt;span class=&#39;n&#39;&gt;infinite&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;;&lt;/span&gt;
+	&lt;span class=&#39;n&#39;&gt;animation&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;:&lt;/span&gt;&lt;span class=&#39;k&#39;&gt;blink&lt;/span&gt; &lt;span class=&#39;m&#39;&gt;1s&lt;/span&gt; &lt;span class=&#39;n&#39;&gt;step&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;-&lt;/span&gt;&lt;span class=&#39;n&#39;&gt;end&lt;/span&gt; &lt;span class=&#39;n&#39;&gt;infinite&lt;/span&gt;
+&lt;span class=&#39;p&#39;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;This will tell the browser to look for a tag with .blink class and apply the animation with the name &lt;code&gt;blink&lt;/code&gt; to it. This animation has been defined above. Basically, it sets the opacity of the object to 1 in 0% keyframe and to 0 in 50% keyframe. That’s all.&lt;/p&gt;
+
+&lt;p&gt;Now when you put all of this together you should see a very nice typing with styles and everything, exactly like Google’s one and here is the demo :&lt;/p&gt;
+&lt;style type=&#39;text/css&#39;&gt;
+@import url(http://fonts.googleapis.com/css?family=Roboto:100,400);
+
+@-webkit-keyframes blink{
+  0%{opacity:1}
+  50%{opacity:0}
+}
+@-moz-keyframes blink{
+  0%{opacity:1}
+  50%{opacity:0}
+}
+@-ms-keyframes blink{
+  0%{opacity:1}
+  50%{opacity:0}
+}
+@keyframes blink{
+  0%{opacity:1}
+  50%{opacity:0}
+}
+.type-out__beam{
+  display:inline-block;
+  margin-bottom:-0.12em;
+  width:0.04545em;
+  line-height:1;
+  min-width:1px;
+  background-color:#fee94e;
+  vertical-align:baseline
+}
+.type-out__beam.blink{
+  -webkit-animation:blink 1s step-end infinite;
+  -moz-animation:blink 1s step-end infinite;
+  -o-animation:blink 1s step-end infinite;
+  animation:blink 1s step-end infinite
+}
+
+.static-word {
+  color: black;
+}
+
+.background {
+  font-family: &#39;Roboto&#39;, sans-serif;
+  font-weight:  100;
+  font-size: 4.44444em;
+  line-height: 1.125;
+  color: #fee94e;
+}
+
+.text {
+  text-align: center;
+  font-weight: 400;
+}
+&lt;/style&gt;&lt;section class=&#39;background&#39;&gt;
+	&lt;section class=&#39;text&#39;&gt;
+		&lt;span class=&#39;static-word&#39;&gt;Let&#39;s &lt;/span&gt;
+		&lt;span class=&#39;type-out__word&#39; id=&#39;type-out__word&#39; /&gt;
+		&lt;span class=&#39;type-out__beam blink&#39;&gt;&amp;nbsp;&lt;/span&gt;
+	&lt;/section&gt;
+&lt;/section&gt;&lt;script type=&#39;text/javascript&#39;&gt;
+	var word_holder = document.getElementById(&quot;type-out__word&quot;);
+	var words = [&#39;geek out&#39;, &#39;break stuff&#39;, &#39;reboot&#39;, &#39;hack&#39;, &#39;grab a drink&#39;, &#39;do this&#39;, &#39;create&#39;, &#39;learn&#39;, &#39;invent&#39;];
+	var word_index = 0;
+	var char_index = 0;
+	myWriteInterval = setInterval(function() { writeText() }, 50);
+	function writeText() {
+		word_holder.innerHTML += words[word_index][char_index];
+		char_index++;
+		if (char_index == words[word_index].length) {
+			word_index++;
+			char_index = 0;
+			stopInterval();
+		};
+		if (word_index == words.length) {
+			word_index = 0;
+		};
+	}
+	function stopInterval() {
+		clearInterval(myWriteInterval);
+		setTimeout(function() { 
+			word_holder.innerHTML = &quot;&quot;;
+			myWriteInterval = setInterval(function() { writeText() }, 50); 
+		}, 3000);
+	}
+&lt;/script&gt;
+&lt;p&gt;That’s all for today, hope this article was helpful for you to understand the basics of CSS styling and Javascript tuming methods. Thanks to my friend &lt;a href=&quot;http://facebook.com/ikbalix&quot;&gt;Ikbal Corleone&lt;/a&gt; for helping me out with CSS stuff ;)&lt;/p&gt;
+
+&lt;p&gt;If you have encountred any problem and this is not working for some reasons, here is the complete code, just copy and past it into a file named typing.html and open it with your browser (Chrome, Mozilla, Opera or Safari).&lt;/p&gt;
+
+&lt;h1 id=&quot;complete_working_code&quot;&gt;Complete working code&lt;/h1&gt;
+
+&lt;h2 id=&quot;_&quot;&gt;&lt;code&gt;typing.html&lt;/code&gt; :&lt;/h2&gt;
+&lt;div class=&#39;highlight&#39;&gt;&lt;pre&gt;&lt;code class=&#39;html&#39;&gt;&lt;span class=&#39;cp&#39;&gt;&amp;lt;!DOCTYPE html&amp;gt;&lt;/span&gt;
+&lt;span class=&#39;nt&#39;&gt;&amp;lt;html&amp;gt;&lt;/span&gt;
+&lt;span class=&#39;nt&#39;&gt;&amp;lt;head&amp;gt;&lt;/span&gt;
+&lt;span class=&#39;nt&#39;&gt;&amp;lt;title&amp;gt;&lt;/span&gt;Type out!&lt;span class=&#39;nt&#39;&gt;&amp;lt;/title&amp;gt;&lt;/span&gt;
+&lt;span class=&#39;nt&#39;&gt;&amp;lt;style &lt;/span&gt;&lt;span class=&#39;na&#39;&gt;type=&lt;/span&gt;&lt;span class=&#39;s&#39;&gt;&amp;quot;text/css&amp;quot;&lt;/span&gt;&lt;span class=&#39;nt&#39;&gt;&amp;gt;&lt;/span&gt;
+&lt;span class=&#39;k&#39;&gt;@import&lt;/span&gt; &lt;span class=&#39;nt&#39;&gt;url&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;(&lt;/span&gt;&lt;span class=&#39;nt&#39;&gt;http&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;://&lt;/span&gt;&lt;span class=&#39;nt&#39;&gt;fonts&lt;/span&gt;&lt;span class=&#39;nc&#39;&gt;.googleapis.com&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;/&lt;/span&gt;&lt;span class=&#39;nt&#39;&gt;css&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;?&lt;/span&gt;&lt;span class=&#39;nt&#39;&gt;family&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;=&lt;/span&gt;&lt;span class=&#39;nt&#39;&gt;Roboto&lt;/span&gt;&lt;span class=&#39;nd&#39;&gt;:100&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;,&lt;/span&gt;&lt;span class=&#39;nt&#39;&gt;400&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;)&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;;&lt;/span&gt;
+
+&lt;span class=&#39;k&#39;&gt;@-webkit-keyframes&lt;/span&gt; &lt;span class=&#39;nt&#39;&gt;blink&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;{&lt;/span&gt;
+	&lt;span class=&#39;nt&#39;&gt;0&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;%&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;{&lt;/span&gt;&lt;span class=&#39;k&#39;&gt;opacity&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;:&lt;/span&gt;&lt;span class=&#39;m&#39;&gt;1&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;}&lt;/span&gt;
+	&lt;span class=&#39;nt&#39;&gt;50&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;%&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;{&lt;/span&gt;&lt;span class=&#39;k&#39;&gt;opacity&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;:&lt;/span&gt;&lt;span class=&#39;m&#39;&gt;0&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;}&lt;/span&gt;
+&lt;span class=&#39;p&#39;&gt;}&lt;/span&gt;
+&lt;span class=&#39;k&#39;&gt;@-moz-keyframes&lt;/span&gt; &lt;span class=&#39;nt&#39;&gt;blink&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;{&lt;/span&gt;
+	&lt;span class=&#39;nt&#39;&gt;0&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;%&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;{&lt;/span&gt;&lt;span class=&#39;k&#39;&gt;opacity&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;:&lt;/span&gt;&lt;span class=&#39;m&#39;&gt;1&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;}&lt;/span&gt;
+	&lt;span class=&#39;nt&#39;&gt;50&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;%&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;{&lt;/span&gt;&lt;span class=&#39;k&#39;&gt;opacity&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;:&lt;/span&gt;&lt;span class=&#39;m&#39;&gt;0&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;}&lt;/span&gt;
+&lt;span class=&#39;p&#39;&gt;}&lt;/span&gt;
+&lt;span class=&#39;k&#39;&gt;@-ms-keyframes&lt;/span&gt; &lt;span class=&#39;nt&#39;&gt;blink&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;{&lt;/span&gt;
+	&lt;span class=&#39;nt&#39;&gt;0&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;%&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;{&lt;/span&gt;&lt;span class=&#39;k&#39;&gt;opacity&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;:&lt;/span&gt;&lt;span class=&#39;m&#39;&gt;1&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;}&lt;/span&gt;
+	&lt;span class=&#39;nt&#39;&gt;50&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;%&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;{&lt;/span&gt;&lt;span class=&#39;k&#39;&gt;opacity&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;:&lt;/span&gt;&lt;span class=&#39;m&#39;&gt;0&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;}&lt;/span&gt;
+&lt;span class=&#39;p&#39;&gt;}&lt;/span&gt;
+&lt;span class=&#39;k&#39;&gt;@keyframes&lt;/span&gt; &lt;span class=&#39;nt&#39;&gt;blink&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;{&lt;/span&gt;
+	&lt;span class=&#39;nt&#39;&gt;0&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;%&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;{&lt;/span&gt;&lt;span class=&#39;k&#39;&gt;opacity&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;:&lt;/span&gt;&lt;span class=&#39;m&#39;&gt;1&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;}&lt;/span&gt;
+	&lt;span class=&#39;nt&#39;&gt;50&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;%&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;{&lt;/span&gt;&lt;span class=&#39;k&#39;&gt;opacity&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;:&lt;/span&gt;&lt;span class=&#39;m&#39;&gt;0&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;}&lt;/span&gt;
+&lt;span class=&#39;p&#39;&gt;}&lt;/span&gt;
+&lt;span class=&#39;nc&#39;&gt;.type-out__beam&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;{&lt;/span&gt;
+	&lt;span class=&#39;k&#39;&gt;display&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;:&lt;/span&gt;&lt;span class=&#39;k&#39;&gt;inline&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;-&lt;/span&gt;&lt;span class=&#39;k&#39;&gt;block&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;;&lt;/span&gt;
+	&lt;span class=&#39;k&#39;&gt;margin-bottom&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;:-&lt;/span&gt;&lt;span class=&#39;m&#39;&gt;0.12em&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;;&lt;/span&gt;
+	&lt;span class=&#39;k&#39;&gt;width&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;:&lt;/span&gt;&lt;span class=&#39;m&#39;&gt;0.04545em&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;;&lt;/span&gt;
+	&lt;span class=&#39;k&#39;&gt;line-height&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;:&lt;/span&gt;&lt;span class=&#39;m&#39;&gt;1&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;;&lt;/span&gt;
+	&lt;span class=&#39;k&#39;&gt;min-width&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;:&lt;/span&gt;&lt;span class=&#39;m&#39;&gt;1px&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;;&lt;/span&gt;
+	&lt;span class=&#39;k&#39;&gt;background-color&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;:&lt;/span&gt;&lt;span class=&#39;m&#39;&gt;#fee94e&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;;&lt;/span&gt;
+	&lt;span class=&#39;k&#39;&gt;vertical-align&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;:&lt;/span&gt;&lt;span class=&#39;k&#39;&gt;baseline&lt;/span&gt;
+&lt;span class=&#39;p&#39;&gt;}&lt;/span&gt;
+&lt;span class=&#39;nc&#39;&gt;.type-out__beam.blink&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;{&lt;/span&gt;
+	&lt;span class=&#39;o&#39;&gt;-&lt;/span&gt;&lt;span class=&#39;n&#39;&gt;webkit&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;-&lt;/span&gt;&lt;span class=&#39;n&#39;&gt;animation&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;:&lt;/span&gt;&lt;span class=&#39;k&#39;&gt;blink&lt;/span&gt; &lt;span class=&#39;m&#39;&gt;1s&lt;/span&gt; &lt;span class=&#39;n&#39;&gt;step&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;-&lt;/span&gt;&lt;span class=&#39;n&#39;&gt;end&lt;/span&gt; &lt;span class=&#39;n&#39;&gt;infinite&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;;&lt;/span&gt;
+	&lt;span class=&#39;o&#39;&gt;-&lt;/span&gt;&lt;span class=&#39;n&#39;&gt;moz&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;-&lt;/span&gt;&lt;span class=&#39;n&#39;&gt;animation&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;:&lt;/span&gt;&lt;span class=&#39;k&#39;&gt;blink&lt;/span&gt; &lt;span class=&#39;m&#39;&gt;1s&lt;/span&gt; &lt;span class=&#39;n&#39;&gt;step&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;-&lt;/span&gt;&lt;span class=&#39;n&#39;&gt;end&lt;/span&gt; &lt;span class=&#39;n&#39;&gt;infinite&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;;&lt;/span&gt;
+	&lt;span class=&#39;o&#39;&gt;-&lt;/span&gt;&lt;span class=&#39;n&#39;&gt;o&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;-&lt;/span&gt;&lt;span class=&#39;n&#39;&gt;animation&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;:&lt;/span&gt;&lt;span class=&#39;k&#39;&gt;blink&lt;/span&gt; &lt;span class=&#39;m&#39;&gt;1s&lt;/span&gt; &lt;span class=&#39;n&#39;&gt;step&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;-&lt;/span&gt;&lt;span class=&#39;n&#39;&gt;end&lt;/span&gt; &lt;span class=&#39;n&#39;&gt;infinite&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;;&lt;/span&gt;
+	&lt;span class=&#39;n&#39;&gt;animation&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;:&lt;/span&gt;&lt;span class=&#39;k&#39;&gt;blink&lt;/span&gt; &lt;span class=&#39;m&#39;&gt;1s&lt;/span&gt; &lt;span class=&#39;n&#39;&gt;step&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;-&lt;/span&gt;&lt;span class=&#39;n&#39;&gt;end&lt;/span&gt; &lt;span class=&#39;n&#39;&gt;infinite&lt;/span&gt;
+&lt;span class=&#39;p&#39;&gt;}&lt;/span&gt;
+
+&lt;span class=&#39;nc&#39;&gt;.static-word&lt;/span&gt; &lt;span class=&#39;p&#39;&gt;{&lt;/span&gt;
+	&lt;span class=&#39;k&#39;&gt;color&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;:&lt;/span&gt; &lt;span class=&#39;nb&#39;&gt;white&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;;&lt;/span&gt;
+&lt;span class=&#39;p&#39;&gt;}&lt;/span&gt;
+
+&lt;span class=&#39;nc&#39;&gt;.background&lt;/span&gt; &lt;span class=&#39;p&#39;&gt;{&lt;/span&gt;
+	&lt;span class=&#39;k&#39;&gt;font-family&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;:&lt;/span&gt; &lt;span class=&#39;s1&#39;&gt;&amp;#39;Roboto&amp;#39;&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;,&lt;/span&gt; &lt;span class=&#39;k&#39;&gt;sans-serif&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;;&lt;/span&gt;
+	&lt;span class=&#39;k&#39;&gt;font-weight&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;:&lt;/span&gt;  &lt;span class=&#39;m&#39;&gt;100&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;;&lt;/span&gt;
+	&lt;span class=&#39;k&#39;&gt;font-size&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;:&lt;/span&gt; &lt;span class=&#39;m&#39;&gt;4.44444em&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;;&lt;/span&gt;
+	&lt;span class=&#39;k&#39;&gt;line-height&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;:&lt;/span&gt; &lt;span class=&#39;m&#39;&gt;1&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;.&lt;/span&gt;&lt;span class=&#39;m&#39;&gt;125&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;;&lt;/span&gt;
+	&lt;span class=&#39;k&#39;&gt;color&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;:&lt;/span&gt; &lt;span class=&#39;m&#39;&gt;#fee94e&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;;&lt;/span&gt;
+	&lt;span class=&#39;k&#39;&gt;background-image&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;:&lt;/span&gt;&lt;span class=&#39;sx&#39;&gt;url(&amp;quot;https://www.google.com/events/io/images/photos/experience-1400.jpg&amp;quot;)&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;;&lt;/span&gt;
+	&lt;span class=&#39;k&#39;&gt;height&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;:&lt;/span&gt;  &lt;span class=&#39;m&#39;&gt;500px&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;;&lt;/span&gt;
+	&lt;span class=&#39;k&#39;&gt;padding-top&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;:&lt;/span&gt; &lt;span class=&#39;m&#39;&gt;400px&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;;&lt;/span&gt;
+	&lt;span class=&#39;k&#39;&gt;margin&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;:&lt;/span&gt; &lt;span class=&#39;m&#39;&gt;0&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;;&lt;/span&gt;
+&lt;span class=&#39;p&#39;&gt;}&lt;/span&gt;
+
+&lt;span class=&#39;nc&#39;&gt;.text&lt;/span&gt; &lt;span class=&#39;p&#39;&gt;{&lt;/span&gt;
+	&lt;span class=&#39;k&#39;&gt;text-align&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;:&lt;/span&gt; &lt;span class=&#39;k&#39;&gt;center&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;;&lt;/span&gt;
+	&lt;span class=&#39;k&#39;&gt;font-weight&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;:&lt;/span&gt; &lt;span class=&#39;m&#39;&gt;400&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;;&lt;/span&gt;
+&lt;span class=&#39;p&#39;&gt;}&lt;/span&gt;
+&lt;span class=&#39;nt&#39;&gt;&amp;lt;/style&amp;gt;&lt;/span&gt;
+&lt;span class=&#39;nt&#39;&gt;&amp;lt;/head&amp;gt;&lt;/span&gt;
+&lt;span class=&#39;nt&#39;&gt;&amp;lt;body&amp;gt;&lt;/span&gt;
+&lt;span class=&#39;nt&#39;&gt;&amp;lt;section&lt;/span&gt; &lt;span class=&#39;na&#39;&gt;class=&lt;/span&gt;&lt;span class=&#39;s&#39;&gt;&amp;quot;background&amp;quot;&lt;/span&gt;&lt;span class=&#39;nt&#39;&gt;&amp;gt;&lt;/span&gt;
+	&lt;span class=&#39;nt&#39;&gt;&amp;lt;section&lt;/span&gt; &lt;span class=&#39;na&#39;&gt;class=&lt;/span&gt;&lt;span class=&#39;s&#39;&gt;&amp;quot;text&amp;quot;&lt;/span&gt;&lt;span class=&#39;nt&#39;&gt;&amp;gt;&lt;/span&gt;
+		&lt;span class=&#39;nt&#39;&gt;&amp;lt;span&lt;/span&gt; &lt;span class=&#39;na&#39;&gt;class=&lt;/span&gt;&lt;span class=&#39;s&#39;&gt;&amp;quot;static-word&amp;quot;&lt;/span&gt;&lt;span class=&#39;nt&#39;&gt;&amp;gt;&lt;/span&gt;Let&amp;#39;s &lt;span class=&#39;nt&#39;&gt;&amp;lt;/span&amp;gt;&lt;/span&gt;
+		&lt;span class=&#39;nt&#39;&gt;&amp;lt;span&lt;/span&gt; &lt;span class=&#39;na&#39;&gt;id=&lt;/span&gt;&lt;span class=&#39;s&#39;&gt;&amp;quot;type-out__word&amp;quot;&lt;/span&gt; &lt;span class=&#39;na&#39;&gt;class=&lt;/span&gt;&lt;span class=&#39;s&#39;&gt;&amp;#39;type-out__word&amp;#39;&lt;/span&gt;&lt;span class=&#39;nt&#39;&gt;&amp;gt;&amp;lt;/span&amp;gt;&lt;/span&gt;
+		&lt;span class=&#39;nt&#39;&gt;&amp;lt;span&lt;/span&gt; &lt;span class=&#39;na&#39;&gt;class=&lt;/span&gt;&lt;span class=&#39;s&#39;&gt;&amp;quot;type-out__beam blink&amp;quot;&lt;/span&gt;&lt;span class=&#39;nt&#39;&gt;&amp;gt;&lt;/span&gt;&lt;span class=&#39;ni&#39;&gt;&amp;amp;nbsp;&lt;/span&gt;&lt;span class=&#39;nt&#39;&gt;&amp;lt;/span&amp;gt;&lt;/span&gt;
+	&lt;span class=&#39;nt&#39;&gt;&amp;lt;/section&amp;gt;&lt;/span&gt;
+&lt;span class=&#39;nt&#39;&gt;&amp;lt;/section&amp;gt;&lt;/span&gt;
+&lt;span class=&#39;nt&#39;&gt;&amp;lt;script &lt;/span&gt;&lt;span class=&#39;na&#39;&gt;type=&lt;/span&gt;&lt;span class=&#39;s&#39;&gt;&amp;quot;text/javascript&amp;quot;&lt;/span&gt;&lt;span class=&#39;nt&#39;&gt;&amp;gt;&lt;/span&gt;
+	&lt;span class=&#39;kd&#39;&gt;var&lt;/span&gt; &lt;span class=&#39;nx&#39;&gt;word_holder&lt;/span&gt; &lt;span class=&#39;o&#39;&gt;=&lt;/span&gt; &lt;span class=&#39;nb&#39;&gt;document&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;.&lt;/span&gt;&lt;span class=&#39;nx&#39;&gt;getElementById&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;(&lt;/span&gt;&lt;span class=&#39;s2&#39;&gt;&amp;quot;type-out__word&amp;quot;&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;);&lt;/span&gt;
+	&lt;span class=&#39;kd&#39;&gt;var&lt;/span&gt; &lt;span class=&#39;nx&#39;&gt;words&lt;/span&gt; &lt;span class=&#39;o&#39;&gt;=&lt;/span&gt; &lt;span class=&#39;p&#39;&gt;[&lt;/span&gt;&lt;span class=&#39;s1&#39;&gt;&amp;#39;geek out&amp;#39;&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;,&lt;/span&gt; &lt;span class=&#39;s1&#39;&gt;&amp;#39;break stuff&amp;#39;&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;,&lt;/span&gt; &lt;span class=&#39;s1&#39;&gt;&amp;#39;reboot&amp;#39;&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;,&lt;/span&gt; &lt;span class=&#39;s1&#39;&gt;&amp;#39;hack&amp;#39;&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;,&lt;/span&gt; &lt;span class=&#39;s1&#39;&gt;&amp;#39;grab a drink&amp;#39;&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;,&lt;/span&gt; &lt;span class=&#39;s1&#39;&gt;&amp;#39;do this&amp;#39;&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;,&lt;/span&gt; &lt;span class=&#39;s1&#39;&gt;&amp;#39;create&amp;#39;&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;,&lt;/span&gt; &lt;span class=&#39;s1&#39;&gt;&amp;#39;learn&amp;#39;&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;,&lt;/span&gt; &lt;span class=&#39;s1&#39;&gt;&amp;#39;invent&amp;#39;&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;];&lt;/span&gt;
+	&lt;span class=&#39;kd&#39;&gt;var&lt;/span&gt; &lt;span class=&#39;nx&#39;&gt;word_index&lt;/span&gt; &lt;span class=&#39;o&#39;&gt;=&lt;/span&gt; &lt;span class=&#39;mi&#39;&gt;0&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;;&lt;/span&gt;
+	&lt;span class=&#39;kd&#39;&gt;var&lt;/span&gt; &lt;span class=&#39;nx&#39;&gt;char_index&lt;/span&gt; &lt;span class=&#39;o&#39;&gt;=&lt;/span&gt; &lt;span class=&#39;mi&#39;&gt;0&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;;&lt;/span&gt;
+	&lt;span class=&#39;nx&#39;&gt;myWriteInterval&lt;/span&gt; &lt;span class=&#39;o&#39;&gt;=&lt;/span&gt; &lt;span class=&#39;nx&#39;&gt;setInterval&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;(&lt;/span&gt;&lt;span class=&#39;kd&#39;&gt;function&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;()&lt;/span&gt; &lt;span class=&#39;p&#39;&gt;{&lt;/span&gt; &lt;span class=&#39;nx&#39;&gt;writeText&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;()&lt;/span&gt; &lt;span class=&#39;p&#39;&gt;},&lt;/span&gt; &lt;span class=&#39;mi&#39;&gt;50&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;);&lt;/span&gt;
+	&lt;span class=&#39;kd&#39;&gt;function&lt;/span&gt; &lt;span class=&#39;nx&#39;&gt;writeText&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;()&lt;/span&gt; &lt;span class=&#39;p&#39;&gt;{&lt;/span&gt;
+		&lt;span class=&#39;nx&#39;&gt;word_holder&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;.&lt;/span&gt;&lt;span class=&#39;nx&#39;&gt;innerHTML&lt;/span&gt; &lt;span class=&#39;o&#39;&gt;+=&lt;/span&gt; &lt;span class=&#39;nx&#39;&gt;words&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;[&lt;/span&gt;&lt;span class=&#39;nx&#39;&gt;word_index&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;][&lt;/span&gt;&lt;span class=&#39;nx&#39;&gt;char_index&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;];&lt;/span&gt;
+		&lt;span class=&#39;nx&#39;&gt;char_index&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;++&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;;&lt;/span&gt;
+		&lt;span class=&#39;k&#39;&gt;if&lt;/span&gt; &lt;span class=&#39;p&#39;&gt;(&lt;/span&gt;&lt;span class=&#39;nx&#39;&gt;char_index&lt;/span&gt; &lt;span class=&#39;o&#39;&gt;==&lt;/span&gt; &lt;span class=&#39;nx&#39;&gt;words&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;[&lt;/span&gt;&lt;span class=&#39;nx&#39;&gt;word_index&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;].&lt;/span&gt;&lt;span class=&#39;nx&#39;&gt;length&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;)&lt;/span&gt; &lt;span class=&#39;p&#39;&gt;{&lt;/span&gt;
+			&lt;span class=&#39;nx&#39;&gt;word_index&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;++&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;;&lt;/span&gt;
+			&lt;span class=&#39;nx&#39;&gt;char_index&lt;/span&gt; &lt;span class=&#39;o&#39;&gt;=&lt;/span&gt; &lt;span class=&#39;mi&#39;&gt;0&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;;&lt;/span&gt;
+			&lt;span class=&#39;nx&#39;&gt;stopInterval&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;();&lt;/span&gt;
+		&lt;span class=&#39;p&#39;&gt;};&lt;/span&gt;
+		&lt;span class=&#39;k&#39;&gt;if&lt;/span&gt; &lt;span class=&#39;p&#39;&gt;(&lt;/span&gt;&lt;span class=&#39;nx&#39;&gt;word_index&lt;/span&gt; &lt;span class=&#39;o&#39;&gt;==&lt;/span&gt; &lt;span class=&#39;nx&#39;&gt;words&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;.&lt;/span&gt;&lt;span class=&#39;nx&#39;&gt;length&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;)&lt;/span&gt; &lt;span class=&#39;p&#39;&gt;{&lt;/span&gt;
+			&lt;span class=&#39;nx&#39;&gt;word_index&lt;/span&gt; &lt;span class=&#39;o&#39;&gt;=&lt;/span&gt; &lt;span class=&#39;mi&#39;&gt;0&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;;&lt;/span&gt;
+		&lt;span class=&#39;p&#39;&gt;};&lt;/span&gt;
+	&lt;span class=&#39;p&#39;&gt;}&lt;/span&gt;
+	&lt;span class=&#39;kd&#39;&gt;function&lt;/span&gt; &lt;span class=&#39;nx&#39;&gt;stopInterval&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;()&lt;/span&gt; &lt;span class=&#39;p&#39;&gt;{&lt;/span&gt;
+		&lt;span class=&#39;nx&#39;&gt;clearInterval&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;(&lt;/span&gt;&lt;span class=&#39;nx&#39;&gt;myWriteInterval&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;);&lt;/span&gt;
+		&lt;span class=&#39;nx&#39;&gt;setTimeout&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;(&lt;/span&gt;&lt;span class=&#39;kd&#39;&gt;function&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;()&lt;/span&gt; &lt;span class=&#39;p&#39;&gt;{&lt;/span&gt; 
+			&lt;span class=&#39;nx&#39;&gt;word_holder&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;.&lt;/span&gt;&lt;span class=&#39;nx&#39;&gt;innerHTML&lt;/span&gt; &lt;span class=&#39;o&#39;&gt;=&lt;/span&gt; &lt;span class=&#39;s2&#39;&gt;&amp;quot;&amp;quot;&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;;&lt;/span&gt;
+			&lt;span class=&#39;nx&#39;&gt;myWriteInterval&lt;/span&gt; &lt;span class=&#39;o&#39;&gt;=&lt;/span&gt; &lt;span class=&#39;nx&#39;&gt;setInterval&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;(&lt;/span&gt;&lt;span class=&#39;kd&#39;&gt;function&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;()&lt;/span&gt; &lt;span class=&#39;p&#39;&gt;{&lt;/span&gt; &lt;span class=&#39;nx&#39;&gt;writeText&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;()&lt;/span&gt; &lt;span class=&#39;p&#39;&gt;},&lt;/span&gt; &lt;span class=&#39;mi&#39;&gt;50&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;);&lt;/span&gt; 
+		&lt;span class=&#39;p&#39;&gt;},&lt;/span&gt; &lt;span class=&#39;mi&#39;&gt;3000&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;);&lt;/span&gt;
+	&lt;span class=&#39;p&#39;&gt;}&lt;/span&gt;
+&lt;span class=&#39;nt&#39;&gt;&amp;lt;/script&amp;gt;&lt;/span&gt;
+&lt;span class=&#39;nt&#39;&gt;&amp;lt;/body&amp;gt;&lt;/span&gt;
+&lt;span class=&#39;nt&#39;&gt;&amp;lt;/html&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</content>
+ </entry>
  
  <entry>
    <title>Gmail Shelfie, revealed!</title>

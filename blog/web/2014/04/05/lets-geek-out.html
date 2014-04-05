@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Walid - Let's geek out!</title>
+  <meta name="author" content="Walid" />
+  <meta name="description" content="The blog of Walid" />
+  <link rel="canonical" href="http://walidlaribi.github.io/blog/web/2014/04/05/lets-geek-out.html" />
+
+  <link href="//fonts.googleapis.com/css?family=Open+Sans:600,800" rel="stylesheet" type="text/css">
+  <link rel="shortcut icon" href="/favicon.png">
+  <link rel="alternate" type="application/rss+xml" title="Walid" href="http://walidlaribi.github.io/atom.xml" />
+
+  <link rel="stylesheet" href="/assets/css/all.css">
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.1/css/font-awesome.min.css">
+</head>
+<body>
+  <div class="container">
+    <div class="four columns sidebar">
+      <nav>
+  <a href="/">
+    <img src="/logo.png" id="logo" alt="Walid Laribi" style="border-radius: 200px; width: 150px;"/>
+  </a>
+  <h2>Walid's blog</h2>
+  <hr/>
+  <ul>
+  <p>I write lines of code for a better tomorrow.</p>
+  <hr/>
+  <div>
+    <div id="social">
+      Follow me:
+<div id="stalker">
+  
+  <a title="walidlaribi on Github" href="https://github.com/walidlaribi">
+    <i class="fa fa-github-square"></i>
+  </a>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <a title="walidalcherie on Twitter" href="https://twitter.com/walidalcherie">
+    <i class="fa fa-twitter-square"></i>
+  </a>
+  
+
+  
+  <a title="Walid on Facebook" href="https://facebook.com/walidalcherie">
+    <i class="fa fa-facebook-square"></i>
+  </a>
+  
+
+  
+
+  
+
+  
+  <a title="Walid on Google Plus" href="https://plus.google.com/+WalidLaribi">
+    <i class="fa fa-google-plus-square"></i>
+  </a>
+  
+
+  <a title="RSS feed" id="rss" href="/atom.xml">
+    <i class="fa fa-rss-square"></i>
+  </a>
+</div>
+
+    </div>
+  </div>
+  </ul>
+</nav>
+    </div>
+
+    <div class="eleven columns content">
+      <p class="meta">
+  April 05, 2014 
+  <a href="/">
+    <i class="home fa fa-home"></i>
+  </a>
+</p>
+
+<h1 class="title">Let's geek out!</h1>
+
+<div id="post">
+  <p>I was looking at this year’s <a href="https://www.google.com/events/io/">Google I/O website</a>, please take a look at it. This is the design I really love: Simple, flat, creative and modern! My hope every web designer/developer get inspired by this website in the future for better quality!</p>
+
+<p>If you notice in the second screen of the website, you’ll find a nice photo and some text that is being written continuously on top of it with some cool words: Let’s geek out, Let’s hack, Let’s reboot, Let’s do this, etc.</p>
+
+<p>I personally liked it so much and found it original, so today, we’re going to recreate it with HTML, Javascript and CSS3. This is going to be very simple, even if you don’t have a lot of knowledge in JS or CSS3 you can easily follow the tutorial and understand how it is working.</p>
+
+<h2 id="lets_start">Let’s start!</h2>
+
+<p>First of all, we have to define the structure of our HTML page. We should put a background image, inside it we have a static text (Let’s), next to it a dynamic text (geek out) and finally a blinking cursor. So we will have the following structure:</p>
+<div class='highlight'><pre><code class='html'><span class='nt'>&lt;section</span> <span class='na'>class=</span><span class='s'>&quot;background&quot;</span><span class='nt'>&gt;</span>
+	<span class='nt'>&lt;section</span> <span class='na'>class=</span><span class='s'>&quot;text&quot;</span><span class='nt'>&gt;</span>
+		<span class='nt'>&lt;span</span> <span class='na'>class=</span><span class='s'>&quot;static-word&quot;</span><span class='nt'>&gt;</span>Let&#39;s<span class='nt'>&lt;/span&gt;</span>
+		<span class='nt'>&lt;span</span> <span class='na'>id=</span><span class='s'>&quot;type-out__word&quot;</span><span class='nt'>&gt;</span>(dynamic text)<span class='nt'>&lt;/span&gt;</span>
+		<span class='nt'>&lt;span</span> <span class='na'>class=</span><span class='s'>&quot;type-out__beam blink&quot;</span><span class='nt'>&gt;</span><span class='ni'>&amp;nbsp;</span><span class='nt'>&lt;/span&gt;</span>
+	<span class='nt'>&lt;/section&gt;</span>
+<span class='nt'>&lt;/section&gt;</span>
+</code></pre></div>
+<p>This is our file structure, very simple! Now we need to add a script in order to manipulate this document and add our typing effect to it. I’ll first explain how does it work. First, we will define an array of words that are going to be written in the dynamic text containet span. Then, we will use Javascript timing methods <code>setInterval()</code> and <code>setTimeout()</code> for the delays, so the text will not appear at once, but we’ll simulate the writing instead.</p>
+
+<p>Javascript’s <code>setInterval()</code> method takes two arguments, a callback and a time interval just like this:</p>
+<div class='highlight'><pre><code class='javascript'><span class='nx'>setInterval</span><span class='p'>(</span><span class='kd'>function</span><span class='p'>()</span> <span class='p'>{</span> <span class='c1'>//do stuff here; }, 1000); //interval in milliseconds</span>
+</code></pre></div>
+<p>This means that anything you put in the <code>//do stuff here;</code> section will be executed repeatedly every 1 second. If you want to stop this execution, then you’ll have to call the <code>clearInterval()</code> method, by giving the name of your <code>setInterval()</code> method as a parameter just like this:</p>
+<div class='highlight'><pre><code class='javascript'><span class='kd'>var</span> <span class='nx'>myIntervalMethod</span> <span class='o'>=</span> <span class='nx'>setInterval</span><span class='p'>(</span><span class='kd'>function</span><span class='p'>()</span> <span class='p'>{</span> <span class='c1'>//do stuff here; }, 1000); //interval in milliseconds</span>
+<span class='nx'>clearInterval</span><span class='p'>(</span><span class='nx'>myIntervalMethod</span><span class='p'>);</span>
+</code></pre></div>
+<p>The other timing method that we’re going to use is the <code>setTimeout()</code> method which works like <code>setInterval()</code> but it executes the callback method only once. It’s like you’re telling your brwoser: Okay, please wait 1000 milliseconds, then execute this callback method.</p>
+
+<blockquote>
+<p>You can read more about Javascript’s timing methods by following <a href="www.w3schools.com/js/js_timing.asp">THIS</a> link.</p>
+</blockquote>
+
+<p>So here is our Javascript code to simulate the typing:</p>
+<div class='highlight'><pre><code class='javascript'><span class='c1'>//First, we get our span in which we&#39;re going to display dynamic text.</span>
+<span class='kd'>var</span> <span class='nx'>word_holder</span> <span class='o'>=</span> <span class='nb'>document</span><span class='p'>.</span><span class='nx'>getElementById</span><span class='p'>(</span><span class='s2'>&quot;type-out__word&quot;</span><span class='p'>);</span>
+
+<span class='c1'>//We define our array of words that we want to display, you can add as many words as you want.</span>
+<span class='kd'>var</span> <span class='nx'>words</span> <span class='o'>=</span> <span class='p'>[</span><span class='s1'>&#39;geek out&#39;</span><span class='p'>,</span> <span class='s1'>&#39;break stuff&#39;</span><span class='p'>,</span> <span class='s1'>&#39;reboot&#39;</span><span class='p'>,</span> <span class='s1'>&#39;hack&#39;</span><span class='p'>,</span> <span class='s1'>&#39;grab a drink&#39;</span><span class='p'>,</span> <span class='s1'>&#39;do this&#39;</span><span class='p'>,</span> <span class='s1'>&#39;create&#39;</span><span class='p'>,</span> <span class='s1'>&#39;learn&#39;</span><span class='p'>,</span> <span class='s1'>&#39;invent&#39;</span><span class='p'>];</span>
+
+<span class='c1'>//word_index is the index in the array of the word being typed.</span>
+<span class='kd'>var</span> <span class='nx'>word_index</span> <span class='o'>=</span> <span class='mi'>0</span><span class='p'>;</span>
+
+<span class='c1'>//char_index is the index in the word of the character being typed.</span>
+<span class='kd'>var</span> <span class='nx'>char_index</span> <span class='o'>=</span> <span class='mi'>0</span><span class='p'>;</span>
+
+<span class='c1'>//we tell the browser to execute writeText() method every 50 milliseconds.</span>
+<span class='nx'>myWriteInterval</span> <span class='o'>=</span> <span class='nx'>setInterval</span><span class='p'>(</span><span class='kd'>function</span><span class='p'>()</span> <span class='p'>{</span> <span class='nx'>writeText</span><span class='p'>()</span> <span class='p'>},</span> <span class='mi'>50</span><span class='p'>);</span>
+
+<span class='c1'>//we define writeText() method responsible of typing characters in the dynamic text span.</span>
+<span class='kd'>function</span> <span class='nx'>writeText</span><span class='p'>()</span> <span class='p'>{</span>
+	<span class='c1'>//we add the character in char_index position of the word_index word to our span&#39;s innnerHTML.</span>
+	<span class='nx'>word_holder</span><span class='p'>.</span><span class='nx'>innerHTML</span> <span class='o'>+=</span> <span class='nx'>words</span><span class='p'>[</span><span class='nx'>word_index</span><span class='p'>][</span><span class='nx'>char_index</span><span class='p'>];</span>
+	<span class='c1'>//increment the char_index to write the next character during the next call of the method</span>
+	<span class='nx'>char_index</span><span class='o'>++</span><span class='p'>;</span>
+	<span class='c1'>//if we&#39;ve just types the last character of a word, increment word_index and call stopInterval() to wait a little bit.</span>
+	<span class='k'>if</span> <span class='p'>(</span><span class='nx'>char_index</span> <span class='o'>==</span> <span class='nx'>words</span><span class='p'>[</span><span class='nx'>word_index</span><span class='p'>].</span><span class='nx'>length</span><span class='p'>)</span> <span class='p'>{</span>
+		<span class='nx'>word_index</span><span class='o'>++</span><span class='p'>;</span>
+		<span class='nx'>char_index</span> <span class='o'>=</span> <span class='mi'>0</span><span class='p'>;</span>
+		<span class='nx'>stopInterval</span><span class='p'>();</span>
+	<span class='p'>};</span>
+	<span class='c1'>//if we&#39;ve just wrote the last word of the array, we start over.</span>
+	<span class='k'>if</span> <span class='p'>(</span><span class='nx'>word_index</span> <span class='o'>==</span> <span class='nx'>words</span><span class='p'>.</span><span class='nx'>length</span><span class='p'>)</span> <span class='p'>{</span>
+		<span class='nx'>word_index</span> <span class='o'>=</span> <span class='mi'>0</span><span class='p'>;</span>
+	<span class='p'>};</span>
+<span class='p'>}</span>
+
+<span class='c1'>//we define our stopInterval() method responsible of pausing the typing a little bit and then restarting it.</span>
+<span class='kd'>function</span> <span class='nx'>stopInterval</span><span class='p'>()</span> <span class='p'>{</span>
+	<span class='c1'>//clearInterval() stops the actual execution of myWriteInterval function.</span>
+	<span class='nx'>clearInterval</span><span class='p'>(</span><span class='nx'>myWriteInterval</span><span class='p'>);</span>
+
+	<span class='c1'>//here we call setTimeout() in order to wait 3 seconds before calling myWriteInterval again to fire up the typing of the next word.</span>
+	<span class='nx'>setTimeout</span><span class='p'>(</span><span class='kd'>function</span><span class='p'>()</span> <span class='p'>{</span> 
+		<span class='c1'>//we clear the content of our span.</span>
+		<span class='nx'>word_holder</span><span class='p'>.</span><span class='nx'>innerHTML</span> <span class='o'>=</span> <span class='s2'>&quot;&quot;</span><span class='p'>;</span>
+		<span class='nx'>myWriteInterval</span> <span class='o'>=</span> <span class='nx'>setInterval</span><span class='p'>(</span><span class='kd'>function</span><span class='p'>()</span> <span class='p'>{</span> <span class='nx'>writeText</span><span class='p'>()</span> <span class='p'>},</span> <span class='mi'>50</span><span class='p'>);</span> 
+	<span class='p'>},</span> <span class='mi'>3000</span><span class='p'>);</span>
+<span class='p'>}</span>
+</code></pre></div>
+<p>If you execute this code now, it should display “Let’s ” plus a word from the array with typing being simulated and all. This is perfect. But you will notice that it just doesn’t look like Google’s one, ours is ugly! Of course, here is when CSS comes into the game :)</p>
+
+<p>In order for our page to look more beautiful, we will add the following styling to it, nothing special.</p>
+<div class='highlight'><pre><code class='css'><span class='o'>&lt;</span><span class='nt'>style</span><span class='o'>&gt;</span>
+<span class='k'>@import</span> <span class='nt'>url</span><span class='o'>(</span><span class='nt'>http</span><span class='o'>://</span><span class='nt'>fonts</span><span class='nc'>.googleapis.com</span><span class='o'>/</span><span class='nt'>css</span><span class='o'>?</span><span class='nt'>family</span><span class='o'>=</span><span class='nt'>Roboto</span><span class='nd'>:100</span><span class='o'>,</span><span class='nt'>400</span><span class='o'>)</span><span class='p'>;</span>
+
+<span class='nc'>.type-out__beam</span><span class='p'>{</span>
+	<span class='k'>display</span><span class='o'>:</span><span class='k'>inline</span><span class='o'>-</span><span class='k'>block</span><span class='p'>;</span>
+	<span class='k'>margin-bottom</span><span class='o'>:-</span><span class='m'>0.12em</span><span class='p'>;</span>
+	<span class='k'>width</span><span class='o'>:</span><span class='m'>0.04545em</span><span class='p'>;</span>
+	<span class='k'>line-height</span><span class='o'>:</span><span class='m'>1</span><span class='p'>;</span>
+	<span class='k'>min-width</span><span class='o'>:</span><span class='m'>1px</span><span class='p'>;</span>
+	<span class='k'>background-color</span><span class='o'>:</span><span class='m'>#fee94e</span><span class='p'>;</span>
+	<span class='k'>vertical-align</span><span class='o'>:</span><span class='k'>baseline</span>
+<span class='p'>}</span>
+
+<span class='nc'>.static-word</span> <span class='p'>{</span>
+	<span class='k'>color</span><span class='o'>:</span> <span class='nb'>white</span><span class='p'>;</span>
+<span class='p'>}</span>
+
+<span class='nc'>.background</span> <span class='p'>{</span>
+	<span class='k'>font-family</span><span class='o'>:</span> <span class='s1'>&#39;Roboto&#39;</span><span class='o'>,</span> <span class='k'>sans-serif</span><span class='p'>;</span>
+	<span class='k'>font-weight</span><span class='o'>:</span>  <span class='m'>100</span><span class='p'>;</span>
+	<span class='k'>font-size</span><span class='o'>:</span> <span class='m'>4.44444em</span><span class='p'>;</span>
+	<span class='k'>line-height</span><span class='o'>:</span> <span class='m'>1</span><span class='o'>.</span><span class='m'>125</span><span class='p'>;</span>
+	<span class='k'>color</span><span class='o'>:</span> <span class='m'>#fee94e</span><span class='p'>;</span>
+	<span class='k'>background-image</span><span class='o'>:</span><span class='sx'>url(&quot;https://www.google.com/events/io/images/photos/experience-1400.jpg&quot;)</span><span class='p'>;</span>
+	<span class='k'>height</span><span class='o'>:</span>  <span class='m'>500px</span><span class='p'>;</span>
+	<span class='k'>padding-top</span><span class='o'>:</span> <span class='m'>400px</span><span class='p'>;</span>
+	<span class='k'>margin</span><span class='o'>:</span> <span class='m'>0</span><span class='p'>;</span>
+<span class='p'>}</span>
+
+<span class='nc'>.text</span> <span class='p'>{</span>
+	<span class='k'>text-align</span><span class='o'>:</span> <span class='k'>center</span><span class='p'>;</span>
+	<span class='k'>font-weight</span><span class='o'>:</span> <span class='m'>400</span><span class='p'>;</span>
+<span class='p'>}</span>
+<span class='o'>&lt;/</span><span class='nt'>style</span><span class='o'>&gt;</span>
+</code></pre></div>
+<p>Put all together and you should have the following result:</p>
+
+<p><img src="http://walidlaribi.github.io/assets/type-out-first.png" alt="Demo typing" /></p>
+
+<p>You will tell me now that the cursor is not blinking like Google’s one! You are wright, because we haven’t add any CSS3 animations yet. Add the following code into your style:</p>
+<div class='highlight'><pre><code class='css'><span class='k'>@-webkit-keyframes</span> <span class='nt'>blink</span><span class='p'>{</span>
+	<span class='nt'>0</span><span class='o'>%</span><span class='p'>{</span><span class='k'>opacity</span><span class='o'>:</span><span class='m'>1</span><span class='p'>}</span>
+	<span class='nt'>50</span><span class='o'>%</span><span class='p'>{</span><span class='k'>opacity</span><span class='o'>:</span><span class='m'>0</span><span class='p'>}</span>
+<span class='p'>}</span>
+<span class='k'>@-moz-keyframes</span> <span class='nt'>blink</span><span class='p'>{</span>
+	<span class='nt'>0</span><span class='o'>%</span><span class='p'>{</span><span class='k'>opacity</span><span class='o'>:</span><span class='m'>1</span><span class='p'>}</span>
+	<span class='nt'>50</span><span class='o'>%</span><span class='p'>{</span><span class='k'>opacity</span><span class='o'>:</span><span class='m'>0</span><span class='p'>}</span>
+<span class='p'>}</span>
+<span class='k'>@-ms-keyframes</span> <span class='nt'>blink</span><span class='p'>{</span>
+	<span class='nt'>0</span><span class='o'>%</span><span class='p'>{</span><span class='k'>opacity</span><span class='o'>:</span><span class='m'>1</span><span class='p'>}</span>
+	<span class='nt'>50</span><span class='o'>%</span><span class='p'>{</span><span class='k'>opacity</span><span class='o'>:</span><span class='m'>0</span><span class='p'>}</span>
+<span class='p'>}</span>
+<span class='k'>@keyframes</span> <span class='nt'>blink</span><span class='p'>{</span>
+	<span class='nt'>0</span><span class='o'>%</span><span class='p'>{</span><span class='k'>opacity</span><span class='o'>:</span><span class='m'>1</span><span class='p'>}</span>
+	<span class='nt'>50</span><span class='o'>%</span><span class='p'>{</span><span class='k'>opacity</span><span class='o'>:</span><span class='m'>0</span><span class='p'>}</span>
+<span class='p'>}</span>
+
+<span class='nc'>.type-out__beam.blink</span><span class='p'>{</span>
+	<span class='o'>-</span><span class='n'>webkit</span><span class='o'>-</span><span class='n'>animation</span><span class='o'>:</span><span class='k'>blink</span> <span class='m'>1s</span> <span class='n'>step</span><span class='o'>-</span><span class='n'>end</span> <span class='n'>infinite</span><span class='p'>;</span>
+	<span class='o'>-</span><span class='n'>moz</span><span class='o'>-</span><span class='n'>animation</span><span class='o'>:</span><span class='k'>blink</span> <span class='m'>1s</span> <span class='n'>step</span><span class='o'>-</span><span class='n'>end</span> <span class='n'>infinite</span><span class='p'>;</span>
+	<span class='o'>-</span><span class='n'>o</span><span class='o'>-</span><span class='n'>animation</span><span class='o'>:</span><span class='k'>blink</span> <span class='m'>1s</span> <span class='n'>step</span><span class='o'>-</span><span class='n'>end</span> <span class='n'>infinite</span><span class='p'>;</span>
+	<span class='n'>animation</span><span class='o'>:</span><span class='k'>blink</span> <span class='m'>1s</span> <span class='n'>step</span><span class='o'>-</span><span class='n'>end</span> <span class='n'>infinite</span>
+<span class='p'>}</span>
+</code></pre></div>
+<p>This will tell the browser to look for a tag with .blink class and apply the animation with the name <code>blink</code> to it. This animation has been defined above. Basically, it sets the opacity of the object to 1 in 0% keyframe and to 0 in 50% keyframe. That’s all.</p>
+
+<p>Now when you put all of this together you should see a very nice typing with styles and everything, exactly like Google’s one and here is the demo :</p>
+<style type='text/css'>
+@import url(http://fonts.googleapis.com/css?family=Roboto:100,400);
+
+@-webkit-keyframes blink{
+  0%{opacity:1}
+  50%{opacity:0}
+}
+@-moz-keyframes blink{
+  0%{opacity:1}
+  50%{opacity:0}
+}
+@-ms-keyframes blink{
+  0%{opacity:1}
+  50%{opacity:0}
+}
+@keyframes blink{
+  0%{opacity:1}
+  50%{opacity:0}
+}
+.type-out__beam{
+  display:inline-block;
+  margin-bottom:-0.12em;
+  width:0.04545em;
+  line-height:1;
+  min-width:1px;
+  background-color:#fee94e;
+  vertical-align:baseline
+}
+.type-out__beam.blink{
+  -webkit-animation:blink 1s step-end infinite;
+  -moz-animation:blink 1s step-end infinite;
+  -o-animation:blink 1s step-end infinite;
+  animation:blink 1s step-end infinite
+}
+
+.static-word {
+  color: black;
+}
+
+.background {
+  font-family: 'Roboto', sans-serif;
+  font-weight:  100;
+  font-size: 4.44444em;
+  line-height: 1.125;
+  color: #fee94e;
+}
+
+.text {
+  text-align: center;
+  font-weight: 400;
+}
+</style><section class='background'>
+	<section class='text'>
+		<span class='static-word'>Let's </span>
+		<span class='type-out__word' id='type-out__word' />
+		<span class='type-out__beam blink'>&nbsp;</span>
+	</section>
+</section><script type='text/javascript'>
+	var word_holder = document.getElementById("type-out__word");
+	var words = ['geek out', 'break stuff', 'reboot', 'hack', 'grab a drink', 'do this', 'create', 'learn', 'invent'];
+	var word_index = 0;
+	var char_index = 0;
+	myWriteInterval = setInterval(function() { writeText() }, 50);
+	function writeText() {
+		word_holder.innerHTML += words[word_index][char_index];
+		char_index++;
+		if (char_index == words[word_index].length) {
+			word_index++;
+			char_index = 0;
+			stopInterval();
+		};
+		if (word_index == words.length) {
+			word_index = 0;
+		};
+	}
+	function stopInterval() {
+		clearInterval(myWriteInterval);
+		setTimeout(function() { 
+			word_holder.innerHTML = "";
+			myWriteInterval = setInterval(function() { writeText() }, 50); 
+		}, 3000);
+	}
+</script>
+<p>That’s all for today, hope this article was helpful for you to understand the basics of CSS styling and Javascript tuming methods. Thanks to my friend <a href="http://facebook.com/ikbalix">Ikbal Corleone</a> for helping me out with CSS stuff ;)</p>
+
+<p>If you have encountred any problem and this is not working for some reasons, here is the complete code, just copy and past it into a file named typing.html and open it with your browser (Chrome, Mozilla, Opera or Safari).</p>
+
+<h1 id="complete_working_code">Complete working code</h1>
+
+<h2 id="_"><code>typing.html</code> :</h2>
+<div class='highlight'><pre><code class='html'><span class='cp'>&lt;!DOCTYPE html&gt;</span>
+<span class='nt'>&lt;html&gt;</span>
+<span class='nt'>&lt;head&gt;</span>
+<span class='nt'>&lt;title&gt;</span>Type out!<span class='nt'>&lt;/title&gt;</span>
+<span class='nt'>&lt;style </span><span class='na'>type=</span><span class='s'>&quot;text/css&quot;</span><span class='nt'>&gt;</span>
+<span class='k'>@import</span> <span class='nt'>url</span><span class='o'>(</span><span class='nt'>http</span><span class='o'>://</span><span class='nt'>fonts</span><span class='nc'>.googleapis.com</span><span class='o'>/</span><span class='nt'>css</span><span class='o'>?</span><span class='nt'>family</span><span class='o'>=</span><span class='nt'>Roboto</span><span class='nd'>:100</span><span class='o'>,</span><span class='nt'>400</span><span class='o'>)</span><span class='p'>;</span>
+
+<span class='k'>@-webkit-keyframes</span> <span class='nt'>blink</span><span class='p'>{</span>
+	<span class='nt'>0</span><span class='o'>%</span><span class='p'>{</span><span class='k'>opacity</span><span class='o'>:</span><span class='m'>1</span><span class='p'>}</span>
+	<span class='nt'>50</span><span class='o'>%</span><span class='p'>{</span><span class='k'>opacity</span><span class='o'>:</span><span class='m'>0</span><span class='p'>}</span>
+<span class='p'>}</span>
+<span class='k'>@-moz-keyframes</span> <span class='nt'>blink</span><span class='p'>{</span>
+	<span class='nt'>0</span><span class='o'>%</span><span class='p'>{</span><span class='k'>opacity</span><span class='o'>:</span><span class='m'>1</span><span class='p'>}</span>
+	<span class='nt'>50</span><span class='o'>%</span><span class='p'>{</span><span class='k'>opacity</span><span class='o'>:</span><span class='m'>0</span><span class='p'>}</span>
+<span class='p'>}</span>
+<span class='k'>@-ms-keyframes</span> <span class='nt'>blink</span><span class='p'>{</span>
+	<span class='nt'>0</span><span class='o'>%</span><span class='p'>{</span><span class='k'>opacity</span><span class='o'>:</span><span class='m'>1</span><span class='p'>}</span>
+	<span class='nt'>50</span><span class='o'>%</span><span class='p'>{</span><span class='k'>opacity</span><span class='o'>:</span><span class='m'>0</span><span class='p'>}</span>
+<span class='p'>}</span>
+<span class='k'>@keyframes</span> <span class='nt'>blink</span><span class='p'>{</span>
+	<span class='nt'>0</span><span class='o'>%</span><span class='p'>{</span><span class='k'>opacity</span><span class='o'>:</span><span class='m'>1</span><span class='p'>}</span>
+	<span class='nt'>50</span><span class='o'>%</span><span class='p'>{</span><span class='k'>opacity</span><span class='o'>:</span><span class='m'>0</span><span class='p'>}</span>
+<span class='p'>}</span>
+<span class='nc'>.type-out__beam</span><span class='p'>{</span>
+	<span class='k'>display</span><span class='o'>:</span><span class='k'>inline</span><span class='o'>-</span><span class='k'>block</span><span class='p'>;</span>
+	<span class='k'>margin-bottom</span><span class='o'>:-</span><span class='m'>0.12em</span><span class='p'>;</span>
+	<span class='k'>width</span><span class='o'>:</span><span class='m'>0.04545em</span><span class='p'>;</span>
+	<span class='k'>line-height</span><span class='o'>:</span><span class='m'>1</span><span class='p'>;</span>
+	<span class='k'>min-width</span><span class='o'>:</span><span class='m'>1px</span><span class='p'>;</span>
+	<span class='k'>background-color</span><span class='o'>:</span><span class='m'>#fee94e</span><span class='p'>;</span>
+	<span class='k'>vertical-align</span><span class='o'>:</span><span class='k'>baseline</span>
+<span class='p'>}</span>
+<span class='nc'>.type-out__beam.blink</span><span class='p'>{</span>
+	<span class='o'>-</span><span class='n'>webkit</span><span class='o'>-</span><span class='n'>animation</span><span class='o'>:</span><span class='k'>blink</span> <span class='m'>1s</span> <span class='n'>step</span><span class='o'>-</span><span class='n'>end</span> <span class='n'>infinite</span><span class='p'>;</span>
+	<span class='o'>-</span><span class='n'>moz</span><span class='o'>-</span><span class='n'>animation</span><span class='o'>:</span><span class='k'>blink</span> <span class='m'>1s</span> <span class='n'>step</span><span class='o'>-</span><span class='n'>end</span> <span class='n'>infinite</span><span class='p'>;</span>
+	<span class='o'>-</span><span class='n'>o</span><span class='o'>-</span><span class='n'>animation</span><span class='o'>:</span><span class='k'>blink</span> <span class='m'>1s</span> <span class='n'>step</span><span class='o'>-</span><span class='n'>end</span> <span class='n'>infinite</span><span class='p'>;</span>
+	<span class='n'>animation</span><span class='o'>:</span><span class='k'>blink</span> <span class='m'>1s</span> <span class='n'>step</span><span class='o'>-</span><span class='n'>end</span> <span class='n'>infinite</span>
+<span class='p'>}</span>
+
+<span class='nc'>.static-word</span> <span class='p'>{</span>
+	<span class='k'>color</span><span class='o'>:</span> <span class='nb'>white</span><span class='p'>;</span>
+<span class='p'>}</span>
+
+<span class='nc'>.background</span> <span class='p'>{</span>
+	<span class='k'>font-family</span><span class='o'>:</span> <span class='s1'>&#39;Roboto&#39;</span><span class='o'>,</span> <span class='k'>sans-serif</span><span class='p'>;</span>
+	<span class='k'>font-weight</span><span class='o'>:</span>  <span class='m'>100</span><span class='p'>;</span>
+	<span class='k'>font-size</span><span class='o'>:</span> <span class='m'>4.44444em</span><span class='p'>;</span>
+	<span class='k'>line-height</span><span class='o'>:</span> <span class='m'>1</span><span class='o'>.</span><span class='m'>125</span><span class='p'>;</span>
+	<span class='k'>color</span><span class='o'>:</span> <span class='m'>#fee94e</span><span class='p'>;</span>
+	<span class='k'>background-image</span><span class='o'>:</span><span class='sx'>url(&quot;https://www.google.com/events/io/images/photos/experience-1400.jpg&quot;)</span><span class='p'>;</span>
+	<span class='k'>height</span><span class='o'>:</span>  <span class='m'>500px</span><span class='p'>;</span>
+	<span class='k'>padding-top</span><span class='o'>:</span> <span class='m'>400px</span><span class='p'>;</span>
+	<span class='k'>margin</span><span class='o'>:</span> <span class='m'>0</span><span class='p'>;</span>
+<span class='p'>}</span>
+
+<span class='nc'>.text</span> <span class='p'>{</span>
+	<span class='k'>text-align</span><span class='o'>:</span> <span class='k'>center</span><span class='p'>;</span>
+	<span class='k'>font-weight</span><span class='o'>:</span> <span class='m'>400</span><span class='p'>;</span>
+<span class='p'>}</span>
+<span class='nt'>&lt;/style&gt;</span>
+<span class='nt'>&lt;/head&gt;</span>
+<span class='nt'>&lt;body&gt;</span>
+<span class='nt'>&lt;section</span> <span class='na'>class=</span><span class='s'>&quot;background&quot;</span><span class='nt'>&gt;</span>
+	<span class='nt'>&lt;section</span> <span class='na'>class=</span><span class='s'>&quot;text&quot;</span><span class='nt'>&gt;</span>
+		<span class='nt'>&lt;span</span> <span class='na'>class=</span><span class='s'>&quot;static-word&quot;</span><span class='nt'>&gt;</span>Let&#39;s <span class='nt'>&lt;/span&gt;</span>
+		<span class='nt'>&lt;span</span> <span class='na'>id=</span><span class='s'>&quot;type-out__word&quot;</span> <span class='na'>class=</span><span class='s'>&#39;type-out__word&#39;</span><span class='nt'>&gt;&lt;/span&gt;</span>
+		<span class='nt'>&lt;span</span> <span class='na'>class=</span><span class='s'>&quot;type-out__beam blink&quot;</span><span class='nt'>&gt;</span><span class='ni'>&amp;nbsp;</span><span class='nt'>&lt;/span&gt;</span>
+	<span class='nt'>&lt;/section&gt;</span>
+<span class='nt'>&lt;/section&gt;</span>
+<span class='nt'>&lt;script </span><span class='na'>type=</span><span class='s'>&quot;text/javascript&quot;</span><span class='nt'>&gt;</span>
+	<span class='kd'>var</span> <span class='nx'>word_holder</span> <span class='o'>=</span> <span class='nb'>document</span><span class='p'>.</span><span class='nx'>getElementById</span><span class='p'>(</span><span class='s2'>&quot;type-out__word&quot;</span><span class='p'>);</span>
+	<span class='kd'>var</span> <span class='nx'>words</span> <span class='o'>=</span> <span class='p'>[</span><span class='s1'>&#39;geek out&#39;</span><span class='p'>,</span> <span class='s1'>&#39;break stuff&#39;</span><span class='p'>,</span> <span class='s1'>&#39;reboot&#39;</span><span class='p'>,</span> <span class='s1'>&#39;hack&#39;</span><span class='p'>,</span> <span class='s1'>&#39;grab a drink&#39;</span><span class='p'>,</span> <span class='s1'>&#39;do this&#39;</span><span class='p'>,</span> <span class='s1'>&#39;create&#39;</span><span class='p'>,</span> <span class='s1'>&#39;learn&#39;</span><span class='p'>,</span> <span class='s1'>&#39;invent&#39;</span><span class='p'>];</span>
+	<span class='kd'>var</span> <span class='nx'>word_index</span> <span class='o'>=</span> <span class='mi'>0</span><span class='p'>;</span>
+	<span class='kd'>var</span> <span class='nx'>char_index</span> <span class='o'>=</span> <span class='mi'>0</span><span class='p'>;</span>
+	<span class='nx'>myWriteInterval</span> <span class='o'>=</span> <span class='nx'>setInterval</span><span class='p'>(</span><span class='kd'>function</span><span class='p'>()</span> <span class='p'>{</span> <span class='nx'>writeText</span><span class='p'>()</span> <span class='p'>},</span> <span class='mi'>50</span><span class='p'>);</span>
+	<span class='kd'>function</span> <span class='nx'>writeText</span><span class='p'>()</span> <span class='p'>{</span>
+		<span class='nx'>word_holder</span><span class='p'>.</span><span class='nx'>innerHTML</span> <span class='o'>+=</span> <span class='nx'>words</span><span class='p'>[</span><span class='nx'>word_index</span><span class='p'>][</span><span class='nx'>char_index</span><span class='p'>];</span>
+		<span class='nx'>char_index</span><span class='o'>++</span><span class='p'>;</span>
+		<span class='k'>if</span> <span class='p'>(</span><span class='nx'>char_index</span> <span class='o'>==</span> <span class='nx'>words</span><span class='p'>[</span><span class='nx'>word_index</span><span class='p'>].</span><span class='nx'>length</span><span class='p'>)</span> <span class='p'>{</span>
+			<span class='nx'>word_index</span><span class='o'>++</span><span class='p'>;</span>
+			<span class='nx'>char_index</span> <span class='o'>=</span> <span class='mi'>0</span><span class='p'>;</span>
+			<span class='nx'>stopInterval</span><span class='p'>();</span>
+		<span class='p'>};</span>
+		<span class='k'>if</span> <span class='p'>(</span><span class='nx'>word_index</span> <span class='o'>==</span> <span class='nx'>words</span><span class='p'>.</span><span class='nx'>length</span><span class='p'>)</span> <span class='p'>{</span>
+			<span class='nx'>word_index</span> <span class='o'>=</span> <span class='mi'>0</span><span class='p'>;</span>
+		<span class='p'>};</span>
+	<span class='p'>}</span>
+	<span class='kd'>function</span> <span class='nx'>stopInterval</span><span class='p'>()</span> <span class='p'>{</span>
+		<span class='nx'>clearInterval</span><span class='p'>(</span><span class='nx'>myWriteInterval</span><span class='p'>);</span>
+		<span class='nx'>setTimeout</span><span class='p'>(</span><span class='kd'>function</span><span class='p'>()</span> <span class='p'>{</span> 
+			<span class='nx'>word_holder</span><span class='p'>.</span><span class='nx'>innerHTML</span> <span class='o'>=</span> <span class='s2'>&quot;&quot;</span><span class='p'>;</span>
+			<span class='nx'>myWriteInterval</span> <span class='o'>=</span> <span class='nx'>setInterval</span><span class='p'>(</span><span class='kd'>function</span><span class='p'>()</span> <span class='p'>{</span> <span class='nx'>writeText</span><span class='p'>()</span> <span class='p'>},</span> <span class='mi'>50</span><span class='p'>);</span> 
+		<span class='p'>},</span> <span class='mi'>3000</span><span class='p'>);</span>
+	<span class='p'>}</span>
+<span class='nt'>&lt;/script&gt;</span>
+<span class='nt'>&lt;/body&gt;</span>
+<span class='nt'>&lt;/html&gt;</span>
+</code></pre></div>
+</div>
+
+<div id="related">
+  <h3>Related Posts</h3>
+  <ul class="posts">
+    
+    <li>
+      <span>01 Apr 2014 &raquo;</span> <a href="/blog/google/2014/04/01/shelfie-revealed.html">Gmail Shelfie, revealed!</a>
+    </li>
+    
+    <li>
+      <span>29 Mar 2014 &raquo;</span> <a href="/blog/appengine/2014/03/29/intro-to-gae.html">An introduction to Google App Engine</a>
+    </li>
+    
+    <li>
+      <span>04 Mar 2013 &raquo;</span> <a href="/blog/stories/2013/03/04/nyuad-hackathon-2013.html">7 things I learnt from NYUAD Hackathon 2013 !</a>
+    </li>
+    
+  </ul>
+</div>
+
+
+      <div class="footer">
+        <div class="disclaimer">
+  
+  <p>
+    The postings on this site are my own and don't necessarily represent my 
+    employer’s positions, strategies or opinions.
+  </p>
+  
+
+  <p>
+    © Walid, 2014 &mdash; built with Jekyll using Lagom theme
+  </p>
+</div>
+      </div>
+    </div>
+  </div>
+
+
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-49529343-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+</body>
+</html>
